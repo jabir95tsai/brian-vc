@@ -1,0 +1,20 @@
+{
+  "name": "brian-vc-local",
+  "interface": {
+    "displayName": "Brian VC Local"
+  },
+  "plugins": [
+    {
+      "name": "brian-vc",
+      "source": {
+        "source": "local",
+        "path": "./brian-vc"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

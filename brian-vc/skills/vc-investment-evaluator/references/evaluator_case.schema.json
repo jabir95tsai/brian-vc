@@ -1,0 +1,650 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/brian-vc/evaluator-case.schema.json",
+  "title": "Brian VC evaluator workbook input",
+  "type": "object",
+  "required": [
+    "meta",
+    "deal",
+    "financial_history",
+    "assumptions"
+  ],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "full",
+        "degraded",
+        "blocked"
+      ],
+      "default": "full"
+    },
+    "meta": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "company",
+        "as_of",
+        "currency",
+        "unit"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "company": {
+          "type": "string",
+          "minLength": 1
+        },
+        "as_of": {
+          "type": "string",
+          "format": "date"
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "analyst": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "source_files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "deal": {
+      "type": "object",
+      "required": [
+        "round"
+      ],
+      "properties": {
+        "round": {
+          "type": "string"
+        },
+        "investment": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "pre_money": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "post_money": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "blocked_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "price_per_share": {
+          "type": "number",
+          "minimum": 0
+        },
+        "shares_pre": {
+          "type": "number",
+          "minimum": 0
+        },
+        "new_shares": {
+          "type": "number",
+          "minimum": 0
+        },
+        "esop_dilution_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "security": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "company": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "shareholders": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "directors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "team": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "customers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "suppliers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "financial_history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "year",
+          "revenue"
+        ],
+        "properties": {
+          "year": {
+            "type": "integer"
+          },
+          "revenue": {
+            "type": "number"
+          },
+          "cogs": {
+            "type": "number"
+          },
+          "opex": {
+            "type": "number"
+          },
+          "net_income": {
+            "type": "number"
+          },
+          "cash": {
+            "type": "number"
+          },
+          "debt": {
+            "type": "number"
+          },
+          "total_assets": {
+            "type": "number"
+          },
+          "total_liabilities": {
+            "type": "number"
+          },
+          "equity": {
+            "type": "number"
+          },
+          "capex": {
+            "type": "number"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "bp_forecast": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "comparables": {
+      "type": "array",
+      "description": "Verified CitationTable rows only. Company-provided, incomplete, or secondary-source candidates belong in unverified_comparables until verified.",
+      "items": {
+        "type": "object",
+        "required": [
+          "company",
+          "as_of",
+          "source_url"
+        ],
+        "properties": {
+          "company": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ticker": {
+            "type": "string"
+          },
+          "revenue": {
+            "type": "number"
+          },
+          "market_cap": {
+            "type": "number"
+          },
+          "pe": {
+            "type": "number"
+          },
+          "ev_revenue": {
+            "type": "number"
+          },
+          "as_of": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "verification_status": {
+            "const": "verified"
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "revenue"
+            ]
+          },
+          {
+            "required": [
+              "market_cap"
+            ]
+          },
+          {
+            "required": [
+              "pe"
+            ]
+          },
+          {
+            "required": [
+              "ev_revenue"
+            ]
+          }
+        ],
+        "additionalProperties": true
+      }
+    },
+    "unverified_comparables": {
+      "type": "array",
+      "description": "Rejected or pending comparable candidates, including company-provided values and rows missing a usable metric, data date, or source URL.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "as_of": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string",
+            "description": "page, sheet/range, slide, paragraph, or cell locator"
+          },
+          "url": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "source_id",
+          "locator",
+          "status"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "source_id": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "verified",
+              "conflicted",
+              "unverified",
+              "assumption"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "missing_items": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "deck": {
+      "type": "object",
+      "description": "Case-specific narrative payload. Generic builders may not embed company facts outside this object.",
+      "properties": {
+        "copy": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "redteam_handoff": {
+          "type": "string",
+          "description": "Fixed E2 to F1 handoff sentence from references/experts/redteam.md. Authored by E2 and quoted verbatim by F1; required once deck.redteam has content."
+        }
+      },
+      "additionalProperties": true
+    },
+    "financial_extensions": {
+      "type": "object",
+      "description": "Optional schema-driven legacy-depth sheets; each key becomes a reusable extension sheet.",
+      "properties": {
+        "cash_flow_history": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "equity_changes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "debt_and_related_parties": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "significant_notes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "operating_drivers": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "debt_and_depreciation": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "working_capital_and_statements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "valuation_sensitivity": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "model_checks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "legacy_outputs": {
+      "type": "object",
+      "description": "Optional source content for legacy-parity memo, DD tracker, interview notes, meeting minutes, and financial notes.",
+      "properties": {
+        "interview_records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "meeting_records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "financial_statement_notes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "assumptions": {
+      "type": "object",
+      "required": [
+        "forecast_years",
+        "holding_years",
+        "hurdle_rate",
+        "scenarios"
+      ],
+      "properties": {
+        "forecast_years": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 5,
+          "items": {
+            "type": "integer"
+          }
+        },
+        "holding_years": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "hurdle_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "scenarios": {
+          "type": "object",
+          "required": [
+            "conservative",
+            "base",
+            "upside"
+          ],
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "forecast_rows": {
+                "type": "array",
+                "description": "Explicit year-by-year rows. revenue may be supplied directly or derived from drivers volume times price.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "year"
+                  ],
+                  "properties": {
+                    "year": {
+                      "type": "integer"
+                    },
+                    "revenue": {
+                      "type": "number"
+                    },
+                    "drivers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "volume",
+                          "price"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "volume": {
+                            "type": "number"
+                          },
+                          "price": {
+                            "type": "number"
+                          }
+                        },
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "peer_list_source": {
+      "type": "string",
+      "enum": [
+        "user_specified",
+        "auto"
+      ],
+      "description": "How the D1 comparable list was chosen. 'user_specified' means the user supplied the tickers and they must not be overwritten; 'auto' means the C3 Watchlist topped up with sector leaders. Required whenever the case carries comparables."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "mode"
+        ],
+        "properties": {
+          "mode": {
+            "const": "blocked"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "deal": {
+            "required": [
+              "round",
+              "blocked_reason"
+            ]
+          },
+          "assumptions": {
+            "description": "Blocked cases retain the three named scenario objects for schema stability, but may omit numeric forecast assumptions rather than invent them."
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "deal": {
+            "required": [
+              "round",
+              "investment",
+              "pre_money",
+              "post_money"
+            ]
+          },
+          "assumptions": {
+            "properties": {
+              "scenarios": {
+                "properties": {
+                  "conservative": {
+                    "required": [
+                      "revenue_growth",
+                      "gross_margin",
+                      "opex_ratio",
+                      "tax_rate",
+                      "capex_ratio",
+                      "exit_revenue_multiple"
+                    ]
+                  },
+                  "base": {
+                    "required": [
+                      "revenue_growth",
+                      "gross_margin",
+                      "opex_ratio",
+                      "tax_rate",
+                      "capex_ratio",
+                      "exit_revenue_multiple"
+                    ]
+                  },
+                  "upside": {
+                    "required": [
+                      "revenue_growth",
+                      "gross_margin",
+                      "opex_ratio",
+                      "tax_rate",
+                      "capex_ratio",
+                      "exit_revenue_multiple"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": true
+}

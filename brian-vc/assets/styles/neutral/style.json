@@ -1,0 +1,8 @@
+{
+  "id": "neutral",
+  "version": "1.0.0",
+  "display_name": "Neutral VC",
+  "description": "A restrained, brand-neutral fallback for investment reports.",
+  "instructions": "instructions.md",
+  "targets": ["md", "docx", "xlsx", "pptx"]
+}

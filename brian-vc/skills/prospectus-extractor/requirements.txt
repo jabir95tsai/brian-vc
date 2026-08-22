@@ -1,0 +1,3 @@
+# Compatibility entry point for users who install from this Skill directory.
+# The plugin root is the canonical dependency declaration for all three Skills.
+-r ../../requirements.txt

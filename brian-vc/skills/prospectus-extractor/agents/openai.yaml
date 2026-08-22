@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prospectus Extractor"
+  short_description: "Extract Taiwan prospectus facts into structured outputs"
+  default_prompt: "Use $prospectus-extractor to extract this Taiwan prospectus into a sourced factbase."

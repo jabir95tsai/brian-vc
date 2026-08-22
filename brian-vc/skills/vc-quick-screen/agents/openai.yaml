@@ -1,0 +1,4 @@
+interface:
+  display_name: "VC Quick Screen"
+  short_description: "Screen a thin VC case before full due diligence"
+  default_prompt: "Use $vc-quick-screen to screen this pitch deck and identify whether it merits full due diligence."

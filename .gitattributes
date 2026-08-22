@@ -1,0 +1,12 @@
+# The prospectus-extractor delivery gate compares a rendered in-memory string
+# (always LF) against the file on disk byte-for-byte -- see build_manifest.py's
+# content_match. The renderers use write_bytes() to keep output pure LF, so git
+# must not rewrite line endings on checkout, whatever core.autocrlf is set to.
+* text=auto eol=lf
+
+# Binary deliverables and fixtures: never touch.
+*.pdf   binary
+*.png   binary
+*.docx  binary
+*.xlsx  binary
+*.zip   binary

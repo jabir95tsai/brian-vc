@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Scratch files the test runners delete and regenerate on every run.
+# run-latest-docx is rebuilt by run_all_tests.py and a DOCX embeds timestamps,
+# so tracking it makes `git status` dirty after every test run. The dated
+# run-* directories are kept: those are the reviewed evidence artifacts.
+/tests/vc-quick-screen/run-latest-docx/
+.step-heading-variant.md
+.numeric-subheading-variant.md
+
+# Managed artifact runtime junctions and generated evaluator QA artifacts.
+/skills/vc-investment-evaluator/scripts/node_modules/
+/tests/vc-investment-evaluator/prepared_fixture.json
+/tests/vc-investment-evaluator/artifact-output/
+/tests/vc-investment-evaluator/artifact-preview/
+/tests/vc-investment-evaluator/deck-output/
+/tests/vc-investment-evaluator/deck-preview/
+/.install-test-runtime/

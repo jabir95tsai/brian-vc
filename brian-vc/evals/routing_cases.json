@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "cases": [
+    {"id": "QS-01", "prompt": "我只有一份 pitch deck，先幫我初篩值不值得做 DD。", "expected_skill": "vc-quick-screen", "expected_level": "L0"},
+    {"id": "QS-02", "prompt": "用這份 BP 做快速 screening，不要硬算 IRR。", "expected_skill": "vc-quick-screen", "expected_level": "L0"},
+    {"id": "QS-03", "prompt": "資料只有公司介紹和部分財務，先做投資初判。", "expected_skill": "vc-quick-screen", "expected_level": "L1"},
+    {"id": "PX-01", "prompt": "把這份台灣公開說明書萃取成 35 分頁 Excel 與 coverage。", "expected_skill": "prospectus-extractor", "expected_level": "conditional"},
+    {"id": "PX-02", "prompt": "請從 MOPS 公說建立有頁碼引用的 Factbase，不做估值。", "expected_skill": "prospectus-extractor", "expected_level": "conditional"},
+    {"id": "DD-01", "prompt": "這個 data room 有查核財報、cap table、term sheet 和三表，請做完整 VC DD。", "expected_skill": "vc-investment-evaluator", "expected_level": "L2"},
+    {"id": "DD-02", "prompt": "做 Pre-IPO 投資評估、同業估值、IRR、RedTeam 與投審會簡報。", "expected_skill": "vc-investment-evaluator", "expected_level": "L2"},
+    {"id": "DD-03", "prompt": "請續跑昨天的完整盡調，驗證舊產物 hash 後從未完成模組繼續。", "expected_skill": "vc-investment-evaluator", "expected_level": "resume"},
+    {"id": "BOUNDARY-01", "prompt": "只有 pitch deck，但我要求完整估值與 IRR。", "expected_skill": "vc-quick-screen", "expected_level": "L0", "note": "Must refuse fabricated full-DD outputs and list upgrade evidence."}
+  ]
+}

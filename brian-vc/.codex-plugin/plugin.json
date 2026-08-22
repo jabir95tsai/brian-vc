@@ -1,0 +1,25 @@
+{
+  "name": "brian-vc",
+  "version": "1.0.0+codex.20260815141526",
+  "description": "Style-agnostic VC screening, prospectus extraction, and investment due-diligence workflows.",
+  "author": {
+    "name": "Brian VC Skill Contributors"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "VC Due Diligence Toolkit",
+    "shortDescription": "Screen, extract, and evaluate VC investment cases.",
+    "longDescription": "A style-agnostic toolkit for quick screening, Taiwan prospectus extraction, full due diligence, valuation, and investment committee packages.",
+    "developerName": "Brian VC Skill Contributors",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use $vc-quick-screen to quick-screen this pitch deck and identify the next diligence steps.",
+      "Use $prospectus-extractor to extract this Taiwan prospectus into a sourced factbase.",
+      "Use $vc-investment-evaluator to run a full VC due-diligence workflow on this data room."
+    ]
+  }
+}

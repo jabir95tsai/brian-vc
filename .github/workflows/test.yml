@@ -1,0 +1,30 @@
+name: plugin-regression
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      # Report every interpreter, so one version-specific break does not hide
+      # the others. Local development currently runs 3.14; 3.12 is the floor.
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install standalone test dependencies
+        run: python -m pip install -r brian-vc/requirements.txt
+      - name: Run complete plugin regression
+        env:
+          # Mirrors the documented `python -X utf8` invocation. This does NOT
+          # paper over locale bugs in the Skills: the runner's locale contract
+          # is covered by test_output_is_utf8_regardless_of_caller_locale,
+          # which spawns its child with PYTHONUTF8=0 on purpose.
+          PYTHONUTF8: "1"
+        run: python brian-vc/tests/run_all.py

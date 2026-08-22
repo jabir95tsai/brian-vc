@@ -1,0 +1,4 @@
+interface:
+  display_name: "VC Investment Evaluator"
+  short_description: "Run a sourced VC due-diligence and valuation workflow"
+  default_prompt: "Use $vc-investment-evaluator to evaluate this company and produce a sourced investment package."

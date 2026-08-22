@@ -1,0 +1,9 @@
+# Real case material: confidential deal data (財報、財測底稿、逐字稿、DD 報告).
+# Never belongs in the repo; the Skills read it from a path the user supplies.
+cases/
+_fwdtest/
+
+# Build artefacts that leaked into case working directories.
+node_modules/
+__pycache__/
+*.py[cod]

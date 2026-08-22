@@ -1,0 +1,645 @@
+{
+  "meta": {
+    "case_id": "20260815_星橋科技",
+    "company": "星橋科技股份有限公司",
+    "as_of": "2026-08-15",
+    "currency": "TWD",
+    "unit": "新台幣百萬元",
+    "analyst": "Brian VC evaluator",
+    "version": "v1",
+    "source_files": [
+      "2025_Audited_FS.pdf",
+      "2026Q2_BP.xlsx",
+      "CapTable_20260801.xlsx"
+    ]
+  },
+  "deal": {
+    "round": "Series B",
+    "investment": 120,
+    "pre_money": 480,
+    "post_money": 600,
+    "price_per_share": 42,
+    "shares_pre": 11428571,
+    "new_shares": 2857143,
+    "esop_dilution_pct": 0.05,
+    "security": "普通股",
+    "notes": "測試資料，不代表真實投資條件",
+    "source": "TermSheet_20260801.pdf"
+  },
+  "company": {
+    "tax_id": "12345678",
+    "founded": "2019-05-20",
+    "address": "臺北市測試路 1 號",
+    "website": "https://example.com",
+    "description": "邊緣 AI 推論模組與管理軟體"
+  },
+  "shareholders": [
+    {
+      "name": "創辦團隊",
+      "shares": 6800000,
+      "ownership_pct": 0.595,
+      "source": "CapTable_20260801.xlsx"
+    },
+    {
+      "name": "種子基金",
+      "shares": 2600000,
+      "ownership_pct": 0.228,
+      "source": "CapTable_20260801.xlsx"
+    }
+  ],
+  "directors": [
+    {
+      "name": "陳執行長",
+      "title": "董事長",
+      "representative": "創辦團隊",
+      "source": "公司變更登記表"
+    }
+  ],
+  "team": [
+    {
+      "name": "陳執行長",
+      "title": "CEO",
+      "experience": "半導體與邊緣運算 15 年",
+      "source": "Management_Bios.pdf"
+    },
+    {
+      "name": "林技術長",
+      "title": "CTO",
+      "experience": "AI 編譯器與韌體 12 年",
+      "source": "Management_Bios.pdf"
+    }
+  ],
+  "products": [
+    {
+      "name": "EdgeBridge X1",
+      "model": "硬體銷售",
+      "status": "量產",
+      "revenue_share_pct": 0.72,
+      "source": "2026Q2_BP.xlsx"
+    },
+    {
+      "name": "Fleet Console",
+      "model": "年約訂閱",
+      "status": "商用",
+      "revenue_share_pct": 0.28,
+      "source": "2026Q2_BP.xlsx"
+    }
+  ],
+  "customers": [
+    {
+      "name": "客戶甲",
+      "concentration_pct": 0.31,
+      "contract_end": "2027-12-31",
+      "source": "TopCustomers.xlsx"
+    },
+    {
+      "name": "客戶乙",
+      "concentration_pct": 0.18,
+      "contract_end": "2027-06-30",
+      "source": "TopCustomers.xlsx"
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "供應商甲",
+      "concentration_pct": 0.46,
+      "item": "運算模組",
+      "source": "TopSuppliers.xlsx"
+    }
+  ],
+  "financial_history": [
+    {
+      "year": 2023,
+      "revenue": 180,
+      "cogs": 118,
+      "opex": 56,
+      "net_income": 3,
+      "cash": 42,
+      "debt": 28,
+      "total_assets": 190,
+      "total_liabilities": 92,
+      "equity": 98,
+      "capex": 12,
+      "source": "2025_Audited_FS.pdf"
+    },
+    {
+      "year": 2024,
+      "revenue": 260,
+      "cogs": 161,
+      "opex": 78,
+      "net_income": 15,
+      "cash": 58,
+      "debt": 35,
+      "total_assets": 248,
+      "total_liabilities": 116,
+      "equity": 132,
+      "capex": 18,
+      "source": "2025_Audited_FS.pdf"
+    },
+    {
+      "year": 2025,
+      "revenue": 360,
+      "cogs": 209,
+      "opex": 105,
+      "net_income": 35,
+      "cash": 76,
+      "debt": 40,
+      "total_assets": 326,
+      "total_liabilities": 142,
+      "equity": 184,
+      "capex": 24,
+      "source": "2025_Audited_FS.pdf"
+    }
+  ],
+  "bp_forecast": [
+    {
+      "year": 2026,
+      "revenue": 520,
+      "gross_margin": 0.44,
+      "opex": 145,
+      "capex": 40,
+      "source": "2026Q2_BP.xlsx"
+    },
+    {
+      "year": 2027,
+      "revenue": 720,
+      "gross_margin": 0.46,
+      "opex": 188,
+      "capex": 52,
+      "source": "2026Q2_BP.xlsx"
+    },
+    {
+      "year": 2028,
+      "revenue": 930,
+      "gross_margin": 0.48,
+      "opex": 228,
+      "capex": 60,
+      "source": "2026Q2_BP.xlsx"
+    },
+    {
+      "year": 2029,
+      "revenue": 1130,
+      "gross_margin": 0.49,
+      "opex": 268,
+      "capex": 66,
+      "source": "2026Q2_BP.xlsx"
+    },
+    {
+      "year": 2030,
+      "revenue": 1320,
+      "gross_margin": 0.5,
+      "opex": 302,
+      "capex": 72,
+      "source": "2026Q2_BP.xlsx"
+    }
+  ],
+  "comparables": [
+    {
+      "company": "同業甲",
+      "ticker": "0001",
+      "revenue": 8200,
+      "market_cap": 24600,
+      "pe": 18.2,
+      "ev_revenue": 3.1,
+      "as_of": "2026-08-14",
+      "source_url": "https://mops.twse.com.tw/"
+    },
+    {
+      "company": "同業乙",
+      "ticker": "0002",
+      "revenue": 4600,
+      "market_cap": 13800,
+      "pe": 21.4,
+      "ev_revenue": 2.8,
+      "as_of": "2026-08-14",
+      "source_url": "https://www.twse.com.tw/"
+    },
+    {
+      "company": "同業丙",
+      "ticker": "0003",
+      "revenue": 12100,
+      "market_cap": 32600,
+      "pe": 16.8,
+      "ev_revenue": 2.6,
+      "as_of": "2026-08-14",
+      "source_url": "https://www.tpex.org.tw/"
+    },
+    {
+      "company": "同業丁",
+      "ticker": "0004",
+      "revenue": 6700,
+      "market_cap": 18700,
+      "pe": 19.6,
+      "ev_revenue": 2.9,
+      "as_of": "2026-08-14",
+      "source_url": "https://mops.twse.com.tw/"
+    },
+    {
+      "company": "同業戊",
+      "ticker": "0005",
+      "revenue": 9300,
+      "market_cap": 27900,
+      "pe": 22.1,
+      "ev_revenue": 3.3,
+      "as_of": "2026-08-14",
+      "source_url": "https://www.twse.com.tw/"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "item": "查核財報",
+      "as_of": "2025-12-31",
+      "name": "2025_Audited_FS.pdf",
+      "url": "file:2025_Audited_FS.pdf",
+      "notes": "測試 fixture"
+    },
+    {
+      "id": "S2",
+      "item": "公司 BP",
+      "as_of": "2026-06-30",
+      "name": "2026Q2_BP.xlsx",
+      "url": "file:2026Q2_BP.xlsx",
+      "notes": "公司預測，非獨立估計"
+    }
+  ],
+  "missing_items": [
+    {
+      "priority": "P0",
+      "item": "最新銀行對帳單",
+      "reason": "驗證現金餘額",
+      "owner": "CFO",
+      "due": "2026-08-22",
+      "status": "待補"
+    },
+    {
+      "priority": "P1",
+      "item": "前三大客戶合約",
+      "reason": "驗證續約與解約條款",
+      "owner": "BD",
+      "due": "2026-08-29",
+      "status": "待補"
+    }
+  ],
+  "financial_extensions": {
+    "cash_flow_history": [
+      {
+        "year": 2025,
+        "operating_cf": 51,
+        "investing_cf": -24,
+        "financing_cf": -9,
+        "source": "2025_Audited_FS.pdf#CF"
+      }
+    ],
+    "equity_changes": [
+      {
+        "year": 2025,
+        "opening_equity": 132,
+        "net_income": 35,
+        "capital_change": 17,
+        "closing_equity": 184,
+        "source": "2025_Audited_FS.pdf#Equity"
+      }
+    ],
+    "debt_and_related_parties": [
+      {
+        "item": "銀行借款",
+        "balance": 40,
+        "rate": "2.1%",
+        "maturity": "2028",
+        "source": "2025_Audited_FS.pdf#Notes"
+      }
+    ],
+    "significant_notes": [
+      {
+        "topic": "收入認列",
+        "finding": "依交付與驗收認列",
+        "source_locator": "2025_Audited_FS.pdf#p42"
+      }
+    ],
+    "operating_drivers": [
+      {
+        "scenario": "base",
+        "year": 2026,
+        "driver": "出貨量",
+        "value": 10000,
+        "unit": "units"
+      }
+    ],
+    "debt_and_depreciation": [
+      {
+        "year": 2026,
+        "opening_debt": 40,
+        "repayment": 8,
+        "interest": 0.8,
+        "depreciation": 12
+      }
+    ],
+    "working_capital_and_statements": [
+      {
+        "year": 2026,
+        "ar_days": 60,
+        "inventory_days": 75,
+        "ap_days": 45,
+        "working_capital_change": 18
+      }
+    ],
+    "valuation_sensitivity": [
+      {
+        "exit_multiple": "3.0x",
+        "achievement": "100%",
+        "irr": "25.0%"
+      }
+    ],
+    "model_checks": [
+      {
+        "check": "資產=負債+權益",
+        "status": "OK",
+        "difference": 0
+      }
+    ]
+  },
+  "legacy_outputs": {
+    "interview_records": [
+      {
+        "date": "2026-08-10",
+        "participants": "CEO/CFO",
+        "question": "收入品質",
+        "answer": "待合約驗證",
+        "source_locator": "Interview#1"
+      }
+    ],
+    "meeting_records": [
+      {
+        "date": "2026-08-12",
+        "participants": "Deal team",
+        "topic": "資料缺口",
+        "decision": "先補 P0",
+        "action": "索取銀行對帳",
+        "owner": "CFO"
+      }
+    ],
+    "financial_statement_notes": [
+      {
+        "topic": "現金",
+        "finding": "期末 76",
+        "impact": "需銀行對帳驗證",
+        "source_locator": "2025_Audited_FS.pdf#BS"
+      }
+    ]
+  },
+  "deck": {
+    "communication_job": "投審會應能判斷是否值得進入條件式下一階段，因為成長與毛利改善有證據，但客戶集中、供應鏈與資金接力仍需驗證。",
+    "thesis": "邊緣 AI 模組收入已具規模，軟體訂閱提高毛利潛力；本輪價格只有在續約、供應與資金條件獲證實時成立。",
+    "decision_status": "條件式進入下一階段；GP 最終決策留白",
+    "conditions": [
+      "取得前三大客戶合約並驗證續約率",
+      "取得最新銀行對帳與月度現金流",
+      "確認核心運算模組第二來源與交期",
+      "以正式產品量價模型替換簡化成長率 proxy"
+    ],
+    "business_metrics": [
+      [
+        "硬體收入占比",
+        "72%",
+        "量產 EdgeBridge X1"
+      ],
+      [
+        "訂閱收入占比",
+        "28%",
+        "Fleet Console 年約"
+      ],
+      [
+        "最大客戶集中",
+        "31%",
+        "需驗證續約條款"
+      ],
+      [
+        "最大供應商集中",
+        "46%",
+        "需第二來源"
+      ]
+    ],
+    "technology_metrics": [
+      [
+        "量產產品",
+        "1",
+        "EdgeBridge X1"
+      ],
+      [
+        "商用軟體",
+        "1",
+        "Fleet Console"
+      ],
+      [
+        "核心供應集中",
+        "46%",
+        "運算模組"
+      ],
+      [
+        "技術停止題",
+        "2",
+        "良率與替代料驗證"
+      ]
+    ],
+    "market_metrics": [
+      [
+        "可比公司",
+        "5 家",
+        "MOPS／TWSE／TPEx"
+      ],
+      [
+        "EV/Revenue 區間",
+        "2.6–3.3x",
+        "2026-08-14"
+      ],
+      [
+        "基準退出倍數",
+        "3.0x",
+        "獨立假設"
+      ],
+      [
+        "成長門檻",
+        "28%",
+        "基準情境"
+      ]
+    ],
+    "scores": [
+      [
+        "技術",
+        72
+      ],
+      [
+        "商業",
+        68
+      ],
+      [
+        "產業",
+        70
+      ],
+      [
+        "財務",
+        74
+      ],
+      [
+        "估值",
+        61
+      ],
+      [
+        "治理",
+        58
+      ]
+    ],
+    "valuation_scenarios": [
+      [
+        "保守",
+        "2.0x",
+        "1,200",
+        "需折價"
+      ],
+      [
+        "基準",
+        "3.0x",
+        "1,800",
+        "條件式成立"
+      ],
+      [
+        "積極",
+        "4.0x",
+        "2,400",
+        "需高成長兌現"
+      ]
+    ],
+    "risks": [
+      [
+        "客戶集中",
+        "高",
+        "高",
+        "P0",
+        "驗證前三大客戶合約"
+      ],
+      [
+        "供應集中",
+        "高",
+        "中",
+        "P0",
+        "第二來源與安全庫存"
+      ],
+      [
+        "財測簡化",
+        "中",
+        "高",
+        "P0",
+        "產品量價模型"
+      ],
+      [
+        "資金接力",
+        "中",
+        "高",
+        "P1",
+        "月度 CF 與 runway"
+      ],
+      [
+        "治理資料",
+        "中",
+        "中",
+        "P1",
+        "完整董監與關係人清單"
+      ]
+    ],
+    "conflicts": [
+      [
+        "投後估值",
+        "Term sheet",
+        "BP 摘要",
+        "待以簽署版確認"
+      ],
+      [
+        "現金餘額",
+        "查核財報",
+        "管理層口頭",
+        "待銀行對帳"
+      ],
+      [
+        "客戶續約",
+        "業務簡報",
+        "合約未提供",
+        "未解"
+      ]
+    ],
+    "redteam": [
+      "成長可能來自單一客戶拉貨，而非可重複需求",
+      "毛利改善可能依賴尚未證實的軟體組合",
+      "3.0x 退出倍數若無官方同業證據可能高估",
+      "正 FCF proxy 未納入營運資金，可能低估資金需求"
+    ],
+    "failure_paths": [
+      [
+        "客戶甲不續約",
+        "營收缺口 31%",
+        "重做估值與 runway"
+      ],
+      [
+        "核心模組缺料",
+        "延遲出貨與毛利受壓",
+        "驗證第二來源"
+      ],
+      [
+        "訂閱轉換不及預期",
+        "毛利率停在 40%",
+        "下修退出倍數"
+      ],
+      [
+        "下一輪延後",
+        "CapEx 計畫受限",
+        "分期投資／里程碑撥款"
+      ]
+    ],
+    "management_questions": [
+      "前三大客戶的合約期間、最低採購與解約條款為何？",
+      "運算模組第二來源何時通過驗證？",
+      "軟體訂閱的 ARR、NRR、Churn 與毛利率為何？",
+      "月度現金消耗與最晚募資時點為何？",
+      "關係人交易與技術授權是否完整揭露？"
+    ],
+    "redteam_handoff": "RedTeam 提出 4 個反對理由，主要風險點為單一大客戶依賴、毛利率結構與現金流缺口，GP 決策框架已留白供填入。"
+  },
+  "assumptions": {
+    "forecast_years": [
+      2026,
+      2027,
+      2028,
+      2029,
+      2030
+    ],
+    "holding_years": 5,
+    "hurdle_rate": 0.25,
+    "scenarios": {
+      "conservative": {
+        "revenue_growth": 0.18,
+        "gross_margin": 0.4,
+        "opex_ratio": 0.31,
+        "tax_rate": 0.2,
+        "capex_ratio": 0.1,
+        "exit_revenue_multiple": 2.0
+      },
+      "base": {
+        "revenue_growth": 0.28,
+        "gross_margin": 0.46,
+        "opex_ratio": 0.27,
+        "tax_rate": 0.2,
+        "capex_ratio": 0.08,
+        "exit_revenue_multiple": 3.0
+      },
+      "upside": {
+        "revenue_growth": 0.38,
+        "gross_margin": 0.51,
+        "opex_ratio": 0.23,
+        "tax_rate": 0.2,
+        "capex_ratio": 0.07,
+        "exit_revenue_multiple": 4.0
+      }
+    }
+  },
+  "peer_list_source": "auto"
+}
