@@ -178,6 +178,10 @@ def run() -> int:
         and "E2→F1 交棒語" in redteam_text
         and "E2→F1" in main
         and "E2→F1" in read(SKILL / "references" / "deck_content_contract.md")
+        # The pipeline contract owns completion evidence, so E2's registry row
+        # and E_GATE must both require the handoff, not just the expert file.
+        and "redteam_handoff" in pipeline
+        and "交棒語" in pipeline
     )
     check(
         "E2 payload carries a fixed E2->F1 RedTeam handoff template",

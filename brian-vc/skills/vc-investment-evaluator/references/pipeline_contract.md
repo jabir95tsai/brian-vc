@@ -71,7 +71,7 @@ Module 狀態描述單一模組；case payload 的 `mode` 描述整案可算到�
 | D2 | Valuation | 獨立專家 | FactSheet、D1、C4 移交 | Phase5B raw、估值區間、退出情境 | 只使用可追溯輸入；IRR 由 script 產生 | D3/E1 |
 | D3 | Financial Model | 主控或獨立模型 agent | C4、D2、交易條件 | 七分頁財測模型 Excel | 三情境、公式可追溯、開啟與公式 QA 通過 | E3/F1 |
 | E1 | Portfolio Synthesis | 獨立專家 | C1–C4、D1–D2 payload | Phase6 raw、六維度、風險矩陣、KPI | raw 含 DECK_EXPORT；GP 欄位留白 | E2/E3 |
-| E2 | RedTeam | 獨立 reviewer | E1、C4 可驗證片段 | RedTeam raw、R1–R6 payload | R1–R6 全部存在 | E3/F1 |
+| E2 | RedTeam | 獨立 reviewer | E1、C4 可驗證片段 | RedTeam raw、R1–R6 payload、E2→F1 交棒語 | R1–R6 全部存在；交棒語已產出且可被 F1 直接取用 | E3/F1 |
 | E3 | Content Freeze | 主控 | B3/B4、D1–D3、E1/E2 | ContentFreeze | 六項追溯問題完成；關鍵衝突為 0 | F1/F2 |
 | F1 | Canonical Package | 主控 | B–E 全部合格產物 | canonical content、ContextPackage、raw bundle | artifact mapping 完整、版本一致 | F2 |
 | F2 | Render | 主控／renderer | F1、style adapter | Executive、Full、Excel | style 未改動內容契約；必要章節存在 | F3 |
@@ -163,6 +163,7 @@ F3 <- F2
 
 - E1 六維度與風險矩陣完成。
 - E2 R1–R6 完整。
+- E2 交棒語已落到 `deck.redteam_handoff`，由 E2 撰寫、F1 逐字引用；`deck.redteam` 有內容時缺此欄即驗證失敗。
 - ContentFreeze 六項追溯問題完成。
 - GP 決策欄位維持留白，除非 GP 本人明確提供內容。
 
