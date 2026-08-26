@@ -7,6 +7,7 @@
 - D1 同業清單恢復雙模式：使用者指定的個股或代號優先且不得被覆蓋，否則沿用 C3 Watchlist 並以同產業龍頭補全；清單來源一律標 `user_specified` 或 `auto`，互動情境先請使用者過目。
 - 新增錯兩次即停：同一 Module 連續失敗 2 次後 runner 拒絕再重試，manifest 以既有狀態加 `failed_attempts`／`retry_exhausted` 欄位記錄，不新增第七種狀態。
 - 新增 E2→F1 RedTeam 交棒語固定格式：payload 直接產出可用句子，F1 組裝 `deck.redteam` 摘要時取用，不必主控重寫。
+- D1／E2 的具名完成事實改由 runner 在 `set complete` 當下驗證（`peer_list_source=`、`redteam_handoff=`），不再等到組工作簿才發現缺漏。
 
 ## v5.2（2026-08-15）可重用 builder、模式 QA 與 replay
 - 擴充中文 data-room routing，加入明確的 full／degraded／quick-screen 執行模式。

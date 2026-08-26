@@ -27,6 +27,16 @@
 
 不得只依檔案存在判定 `complete`；必須驗證內容、來源或結構。續跑只能跳過 `complete` 或有證據的 `not_applicable`。
 
+### 完成證據中的具名事實
+
+有些 Module 的完成證據不只是「有東西」，而是一項可機械檢查的事實。`evaluator_runner.py`
+在 `set <module> complete` 當下就驗，不留到組工作簿才發現：
+
+- **D1**：`peer_list_source=`，值須為 `user_specified` 或 `auto`。
+- **E2**：`redteam_handoff=`，內容須含「GP 決策框架已留白供填入」。
+
+缺這一項或值不合法，`complete` 直接被拒；其餘 Module 不受影響。
+
 ### 重試上限（錯兩次即停）
 
 狀態只有以上六種，重試次數不新增第七種狀態，改以 manifest 的 `failed_attempts` 欄位表達：

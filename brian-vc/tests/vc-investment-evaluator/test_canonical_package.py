@@ -40,7 +40,16 @@ class CanonicalPackageTests(unittest.TestCase):
         for module in MODULES_TO_E_GATE:
             artifact = evidence_dir / f"{module}.md"
             artifact.write_text(f"# {module}\nverified fixture evidence\n", encoding="utf-8")
-            done = self.run_cmd(str(RUNNER), "set", str(self.case_dir), module, "complete", "--evidence", str(artifact), "--artifact", str(artifact))
+            # D1 and E2 owe a named fact at completion (pipeline contract s.2).
+            key_facts = {
+                "D1": "peer_list_source=auto",
+                "E2": "redteam_handoff=RedTeam 提出 5 個反對理由，主要風險點為 A、B、C，"
+                      "GP 決策框架已留白供填入。",
+            }
+            evidence_args = ["--evidence", str(artifact)]
+            if module in key_facts:
+                evidence_args += ["--evidence", key_facts[module]]
+            done = self.run_cmd(str(RUNNER), "set", str(self.case_dir), module, "complete", *evidence_args, "--artifact", str(artifact))
             self.assertEqual(done.returncode, 0, f"{module}: {done.stderr or done.stdout}")
             if module == "B1":
                 b2_evidence = evidence_dir / "B2-not-applicable.md"

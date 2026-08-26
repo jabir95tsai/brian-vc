@@ -22,256 +22,30 @@
     }
   ],
   "coverage": [
-    {
-      "id": "W01",
-      "title": "公司沿革",
-      "status": "partial",
-      "source_refs": [
-        "SRC-001"
-      ],
-      "sheet_names": [
-        "01_公司沿革"
-      ],
-      "reason": "範例僅列三筆"
-    },
-    {
-      "id": "W02",
-      "title": "未來研發計畫",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "09_未來研發計畫"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W03",
-      "title": "董監事",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "03_董監事"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W04",
-      "title": "經營團隊",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "04_經營團隊"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W05",
-      "title": "主要股東",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "05_主要股東"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W06",
-      "title": "股本形成",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "02_股本形成"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W07",
-      "title": "主要產品營收比重",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "06_產品營收比重"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W08",
-      "title": "產業概況",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "22_產業概況"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W09",
-      "title": "中下游關聯性",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "23_中下游關聯"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W10",
-      "title": "競爭情勢",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "24_競爭情勢"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W11",
-      "title": "研發人員與學經歷",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "11_研發人員學經歷"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W12",
-      "title": "研發成功的技術或成果",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "10_研發成功技術"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W13",
-      "title": "銷售地區",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "16_銷售地區"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W14",
-      "title": "產品之用途",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "13_產品用途"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W15",
-      "title": "產品之產製過程",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "14_產製過程"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W16",
-      "title": "主要原料供應商",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "17_主要供應商"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W17",
-      "title": "主要銷貨／客戶",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "18_主要客戶"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W18",
-      "title": "銷售量值",
-      "status": "not_applicable",
-      "source_refs": [],
-      "sheet_names": [
-        "19_銷售量值"
-      ],
-      "reason": "合成範例不具一致數量單位"
-    },
-    {
-      "id": "W19",
-      "title": "從業員工人數",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "12_從業員工人數"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W20",
-      "title": "產品別／部門別毛利率變化",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "15_毛利率變化"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W21",
-      "title": "轉投資狀況",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "25_轉投資"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W22",
-      "title": "重要契約",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "26_重要契約"
-      ],
-      "reason": "合約測試未提供"
-    },
-    {
-      "id": "W23",
-      "title": "歷年財務摘要",
-      "status": "partial",
-      "source_refs": [
-        "SRC-001"
-      ],
-      "sheet_names": [
-        "27_歷年財務摘要5年",
-        "28甲_損益表",
-        "28乙_資產負債表",
-        "28丙_現金流量表"
-      ],
-      "reason": "僅示範資產負債表部分科目"
-    },
-    {
-      "id": "W24",
-      "title": "附件財務報表",
-      "status": "missing",
-      "source_refs": [],
-      "sheet_names": [
-        "28甲_損益表",
-        "28乙_資產負債表",
-        "28丙_現金流量表",
-        "查核意見_明細"
-      ],
-      "reason": "合約測試未提供附件"
-    }
+    {"id": "W01", "title": "公司沿革", "status": "partial", "source_refs": ["SRC-001"], "sheet_names": ["01_公司沿革"], "reason": "範例僅列三筆"},
+    {"id": "W02", "title": "未來研發計畫", "status": "missing", "source_refs": [], "sheet_names": ["09_未來研發計畫"], "reason": "合約測試未提供"},
+    {"id": "W03", "title": "董監事", "status": "missing", "source_refs": [], "sheet_names": ["03_董監事"], "reason": "合約測試未提供"},
+    {"id": "W04", "title": "經營團隊", "status": "missing", "source_refs": [], "sheet_names": ["04_經營團隊"], "reason": "合約測試未提供"},
+    {"id": "W05", "title": "主要股東", "status": "missing", "source_refs": [], "sheet_names": ["05_主要股東"], "reason": "合約測試未提供"},
+    {"id": "W06", "title": "股本形成", "status": "missing", "source_refs": [], "sheet_names": ["02_股本形成"], "reason": "合約測試未提供"},
+    {"id": "W07", "title": "主要產品營收比重", "status": "missing", "source_refs": [], "sheet_names": ["06_產品營收比重"], "reason": "合約測試未提供"},
+    {"id": "W08", "title": "產業概況", "status": "missing", "source_refs": [], "sheet_names": ["22_產業概況"], "reason": "合約測試未提供"},
+    {"id": "W09", "title": "中下游關聯性", "status": "missing", "source_refs": [], "sheet_names": ["23_中下游關聯"], "reason": "合約測試未提供"},
+    {"id": "W10", "title": "競爭情勢", "status": "missing", "source_refs": [], "sheet_names": ["24_競爭情勢"], "reason": "合約測試未提供"},
+    {"id": "W11", "title": "研發人員與學經歷", "status": "missing", "source_refs": [], "sheet_names": ["11_研發人員學經歷"], "reason": "合約測試未提供"},
+    {"id": "W12", "title": "研發成功的技術或成果", "status": "missing", "source_refs": [], "sheet_names": ["10_研發成功技術"], "reason": "合約測試未提供"},
+    {"id": "W13", "title": "銷售地區", "status": "missing", "source_refs": [], "sheet_names": ["16_銷售地區"], "reason": "合約測試未提供"},
+    {"id": "W14", "title": "產品之用途", "status": "missing", "source_refs": [], "sheet_names": ["13_產品用途"], "reason": "合約測試未提供"},
+    {"id": "W15", "title": "產品之產製過程", "status": "missing", "source_refs": [], "sheet_names": ["14_產製過程"], "reason": "合約測試未提供"},
+    {"id": "W16", "title": "主要原料供應商", "status": "missing", "source_refs": [], "sheet_names": ["17_主要供應商"], "reason": "合約測試未提供"},
+    {"id": "W17", "title": "主要銷貨／客戶", "status": "missing", "source_refs": [], "sheet_names": ["18_主要客戶"], "reason": "合約測試未提供"},
+    {"id": "W18", "title": "銷售量值", "status": "not_applicable", "source_refs": [], "sheet_names": ["19_銷售量值"], "reason": "合成範例不具一致數量單位"},
+    {"id": "W19", "title": "從業員工人數", "status": "missing", "source_refs": [], "sheet_names": ["12_從業員工人數"], "reason": "合約測試未提供"},
+    {"id": "W20", "title": "產品別／部門別毛利率變化", "status": "missing", "source_refs": [], "sheet_names": ["15_毛利率變化"], "reason": "合約測試未提供"},
+    {"id": "W21", "title": "轉投資狀況", "status": "missing", "source_refs": [], "sheet_names": ["25_轉投資"], "reason": "合約測試未提供"},
+    {"id": "W22", "title": "重要契約", "status": "missing", "source_refs": [], "sheet_names": ["26_重要契約"], "reason": "合約測試未提供"},
+    {"id": "W23", "title": "歷年財務摘要", "status": "partial", "source_refs": ["SRC-001"], "sheet_names": ["27_歷年財務摘要5年", "28甲_損益表", "28乙_資產負債表", "28丙_現金流量表"], "reason": "僅示範資產負債表部分科目"},
+    {"id": "W24", "title": "附件財務報表", "status": "missing", "source_refs": [], "sheet_names": ["28甲_損益表", "28乙_資產負債表", "28丙_現金流量表", "查核意見_明細"], "reason": "合約測試未提供附件"}
   ],
   "raw_sections": [
     {
@@ -290,393 +64,47 @@
     }
   ],
   "sheets": [
-    {
-      "name": "00_封面",
-      "status": "complete",
-      "header": [
-        "項目",
-        "內容"
-      ],
-      "rows": [
-        [
-          "公司",
-          "示範科技股份有限公司 (0000)"
-        ],
-        [
-          "設立",
-          "民國100年1月1日"
-        ],
-        [
-          "單位",
-          "新台幣仟元（另標註者除外）"
-        ]
-      ],
-      "reason": null,
-      "no_header": true,
-      "widths": [
-        14,
-        72
-      ]
-    },
-    {
-      "name": "00_覆蓋率",
-      "status": "complete",
-      "header": [
-        "#",
-        "項目",
-        "狀態",
-        "對應分頁",
-        "來源/說明"
-      ],
-      "rows": [],
-      "reason": null,
-      "widths": [
-        8,
-        28,
-        16,
-        26,
-        60
-      ]
-    },
-    {
-      "name": "01_公司沿革",
-      "status": "partial",
-      "header": [
-        "年度",
-        "重要紀事",
-        "來源"
-      ],
-      "rows": [
-        [
-          "民國100年1月",
-          "示範科技總公司設立",
-          "SRC-001 physical p.1"
-        ],
-        [
-          "民國108年3月",
-          "第一座示範廠啟用",
-          "SRC-001 physical p.1"
-        ],
-        [
-          "民國115年2月",
-          "取得品質管理系統認證",
-          "SRC-001 physical p.1"
-        ]
-      ],
-      "reason": "範例僅列三筆",
-      "top": true,
-      "widths": [
-        16,
-        66,
-        24
-      ]
-    },
-    {
-      "name": "02_股本形成",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "03_董監事",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "04_經營團隊",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "05_主要股東",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "06_產品營收比重",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "07_目前產品與服務",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "08_未來新產品服務",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "09_未來研發計畫",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "10_研發成功技術",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "11_研發人員學經歷",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "12_從業員工人數",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "13_產品用途",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "14_產製過程",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "15_毛利率變化",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "16_銷售地區",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "17_主要供應商",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "18_主要客戶",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "19_銷售量值",
-      "status": "not_applicable",
-      "header": [],
-      "rows": [],
-      "reason": "合成範例不具一致數量單位"
-    },
-    {
-      "name": "20_生產量值",
-      "status": "not_applicable",
-      "header": [],
-      "rows": [],
-      "reason": "合成範例設定為服務型業務"
-    },
-    {
-      "name": "21_產能利用率",
-      "status": "not_applicable",
-      "header": [],
-      "rows": [],
-      "reason": "合成範例設定為服務型業務"
-    },
-    {
-      "name": "22_產業概況",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "23_中下游關聯",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "24_競爭情勢",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "25_轉投資",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "26_重要契約",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "27_歷年財務摘要5年",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供五年摘要"
-    },
-    {
-      "name": "28甲_損益表",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "28乙_資產負債表",
-      "status": "partial",
-      "header": [
-        "資產負債表科目(仟元)",
-        "合併114",
-        "合併113",
-        "個體114",
-        "個體113",
-        "來源"
-      ],
-      "rows": [
-        [
-          "【資產】",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
-        [
-          "現金及約當現金",
-          772078,
-          626219,
-          295514,
-          539503,
-          "SRC-001 physical p.1"
-        ],
-        [
-          "資產總計",
-          1788398,
-          1804666,
-          1791577,
-          1000027,
-          "SRC-001 physical p.1"
-        ],
-        [
-          "【權益】",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
-        [
-          "權益總計",
-          1132752,
-          1122707,
-          1132752,
-          1122707,
-          "SRC-001 physical p.1"
-        ]
-      ],
-      "reason": "僅示範部分科目",
-      "numcols": [
-        2,
-        3,
-        4,
-        5
-      ],
-      "section_rows": [
-        "【資產】",
-        "【權益】"
-      ],
-      "widths": [
-        26,
-        14,
-        14,
-        14,
-        14,
-        24
-      ]
-    },
-    {
-      "name": "28丙_現金流量表",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "29_AI專家",
-      "status": "not_applicable",
-      "header": [],
-      "rows": [],
-      "reason": "由 evaluator 下游產生；extractor 不填投資意見"
-    },
-    {
-      "name": "查核意見_明細",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    },
-    {
-      "name": "紅旗",
-      "status": "missing",
-      "header": [],
-      "rows": [],
-      "reason": "合約測試未提供"
-    }
+    {"name": "00_封面", "status": "complete", "header": ["項目", "內容"], "rows": [["公司", "示範科技股份有限公司 (0000)"], ["設立", "民國100年1月1日"], ["單位", "新台幣仟元（另標註者除外）"]], "reason": null, "no_header": true, "widths": [14, 72]},
+    {"name": "00_覆蓋率", "status": "complete", "header": ["#", "項目", "狀態", "對應分頁", "來源/說明"], "rows": [], "reason": null, "widths": [8, 28, 16, 26, 60]},
+    {"name": "01_公司沿革", "status": "partial", "header": ["年度", "重要紀事", "來源"], "rows": [["民國100年1月", "示範科技台北總公司成立", "SRC-001 physical p.1"], ["民國108年3月", "第一座示範廠啟用", "SRC-001 physical p.1"], ["民國115年2月", "取得品質管理系統認證", "SRC-001 physical p.1"]], "reason": "範例僅列三筆", "top": true, "widths": [16, 66, 24]},
+    {"name": "02_股本形成", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "03_董監事", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "04_經營團隊", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "05_主要股東", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "06_產品營收比重", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "07_目前產品與服務", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "08_未來新產品服務", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "09_未來研發計畫", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "10_研發成功技術", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "11_研發人員學經歷", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "12_從業員工人數", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "13_產品用途", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "14_產製過程", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "15_毛利率變化", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "16_銷售地區", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "17_主要供應商", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "18_主要客戶", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "19_銷售量值", "status": "not_applicable", "header": [], "rows": [], "reason": "合成範例不具一致數量單位"},
+    {"name": "20_生產量值", "status": "not_applicable", "header": [], "rows": [], "reason": "合成範例設定為服務型業務"},
+    {"name": "21_產能利用率", "status": "not_applicable", "header": [], "rows": [], "reason": "合成範例設定為服務型業務"},
+    {"name": "22_產業概況", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "23_中下游關聯", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "24_競爭情勢", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "25_轉投資", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "26_重要契約", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "27_歷年財務摘要5年", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供五年摘要"},
+    {"name": "28甲_損益表", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "28乙_資產負債表", "status": "partial", "header": ["資產負債表科目(仟元)", "合併114", "合併113", "個體114", "個體113", "來源"], "rows": [["【資產】", "", "", "", "", ""], ["現金及約當現金", 772078, 626219, 295514, 539503, "SRC-001 physical p.1"], ["資產總計", 1788398, 1804666, 1791577, 1000027, "SRC-001 physical p.1"], ["【權益】", "", "", "", "", ""], ["權益總計", 1132752, 1122707, 1132752, 1122707, "SRC-001 physical p.1"]], "reason": "僅示範部分科目", "numcols": [2, 3, 4, 5], "section_rows": ["【資產】", "【權益】"], "widths": [26, 14, 14, 14, 14, 24]},
+    {"name": "28丙_現金流量表", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "29_AI專家", "status": "not_applicable", "header": [], "rows": [], "reason": "由 evaluator 下游產生；extractor 不填投資意見"},
+    {"name": "查核意見_明細", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"},
+    {"name": "紅旗", "status": "missing", "header": [], "rows": [], "reason": "合約測試未提供"}
   ],
   "conflicts": [],
   "red_flags": [],
   "missing_items": [
-    {
-      "item": "附件財務報表",
-      "status": "missing",
-      "reason": "合約測試未提供",
-      "suggested_source": "正式公開說明書附件或查核財報"
-    },
-    {
-      "item": "生產量值",
-      "status": "not_applicable",
-      "reason": "合成範例設定為服務型業務",
-      "suggested_source": null
-    }
+    {"item": "附件財務報表", "status": "missing", "reason": "合約測試未提供", "suggested_source": "正式公開說明書附件或查核財報"},
+    {"item": "生產量值", "status": "not_applicable", "reason": "合成範例設定為服務型業務", "suggested_source": null}
   ],
   "warnings": [
     "本檔是資料契約 fixture，不可作為示範科技的實際投資事實底稿。"

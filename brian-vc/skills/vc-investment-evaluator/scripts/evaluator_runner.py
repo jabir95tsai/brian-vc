@@ -35,6 +35,27 @@ VALID_STATES = {
 }
 TERMINAL_OK = {"complete", "not_applicable"}
 FAILURE_STATES = {"partial", "blocked"}
+# Some modules owe a specific, machine-checkable fact at completion, not just
+# "some evidence". Enforcing it here catches the omission when the module
+# claims to be done, instead of much later when the workbook is assembled.
+# Each entry maps a module to (evidence key, accepted values or markers, hint).
+PEER_LIST_SOURCES = ("user_specified", "auto")
+REDTEAM_HANDOFF_MARKER = "GP 決策框架已留白供填入"
+COMPLETION_EVIDENCE_KEYS = {
+    "D1": (
+        "peer_list_source",
+        PEER_LIST_SOURCES,
+        "record how the comparable list was chosen, e.g. "
+        "--evidence peer_list_source=user_specified",
+    ),
+    "E2": (
+        "redteam_handoff",
+        (REDTEAM_HANDOFF_MARKER,),
+        "record the E2 handoff sentence from references/experts/redteam.md, e.g. "
+        "--evidence \"redteam_handoff=RedTeam 提出 5 個反對理由，...，"
+        f"{REDTEAM_HANDOFF_MARKER}。\"",
+    ),
+}
 MAX_FAILED_ATTEMPTS = 2
 NOT_APPLICABLE_MODULES = {"B2"}
 GATE_MODULES = {
@@ -261,6 +282,26 @@ def init_state(case_root: Path, case_id: str, mode: str, force: bool) -> dict[st
     return state
 
 
+def missing_completion_evidence(module_id: str, evidence_values: list[str]) -> str | None:
+    """Return an actionable message when a module completes without its key fact."""
+    requirement = COMPLETION_EVIDENCE_KEYS.get(module_id)
+    if requirement is None:
+        return None
+    key, accepted, hint = requirement
+    prefix = f"{key}="
+    declared = [item for item in evidence_values if item.startswith(prefix)]
+    if not declared:
+        return f"{module_id} complete requires evidence '{prefix}...'; {hint}"
+    value = declared[0][len(prefix):].strip()
+    if not any(token in value for token in accepted):
+        allowed = ", ".join(accepted)
+        return (
+            f"{module_id} evidence '{prefix}{value}' is not acceptable; "
+            f"expected one of: {allowed}"
+        )
+    return None
+
+
 def set_module_state(
     state: dict[str, Any],
     case_root: Path,
@@ -284,6 +325,10 @@ def set_module_state(
             raise RunnerError(f"{module_id} has unmet dependencies: {', '.join(unmet)}")
     if status == "complete" and (not evidence_values or not artifact_values):
         raise RunnerError("complete requires at least one evidence item and artifact")
+    if status == "complete":
+        problem = missing_completion_evidence(module_id, evidence_values)
+        if problem:
+            raise RunnerError(problem)
     if status == "not_applicable":
         if module_id not in NOT_APPLICABLE_MODULES:
             raise RunnerError(f"not_applicable is not allowed for {module_id}")

@@ -37,10 +37,20 @@ POSITIVE_OUTPUTS = (
     / "星橋邊緣運算_初篩備忘_v1.md",
 )
 NEGATIVE_OUTPUT = TEST_DIR / "negative_empty_shell.md"
-# vQS-1.5 coefficient-tier regression. The memo is the synthetic 星橋 case,
-# evaluated without --legacy-contract so the coefficient-tier check applies.
+# vQS-1.5 coefficient-tier regression on the synthetic 星橋 memo, evaluated
+# without --legacy-contract. This is the portable core: it runs everywhere,
+# including the public mirror, which carries no real case material.
 VQS15_OUTPUT = (
     TEST_DIR / "run-009-independent-vqs-1.4" / "星橋邊緣運算_初篩備忘_v1.md"
+)
+# Real-case regressions are extra coverage held only in the private tree. They
+# are skipped when the fixtures are absent, so the same file works in both.
+GUANQING_OUTPUT = (
+    TEST_DIR / "run-010-guanqing-vqs-1.5" / "示範能源_初篩備忘_v1.md"
+)
+GUANQING_EXPECTATIONS = TEST_DIR / "fixture_guanqing_expectations.json"
+ANFU_OUTPUT = (
+    TEST_DIR / "run-011-independent-vqs-1.5" / "示範科技_初篩備忘_v1.md"
 )
 
 
@@ -359,6 +369,34 @@ def _run() -> int:
                 "utf8",
                 str(TEST_DIR / "evaluate_output.py"),
                 str(VQS15_OUTPUT),
+            ],
+        )
+    )
+    if GUANQING_OUTPUT.is_file() and GUANQING_EXPECTATIONS.is_file():
+        results.append(
+        run(
+            "Real-case coefficient regression: 示範能源",
+            [
+                sys.executable,
+                "-X",
+                "utf8",
+                str(TEST_DIR / "evaluate_output.py"),
+                str(GUANQING_OUTPUT),
+                "--expectations",
+                str(GUANQING_EXPECTATIONS),
+            ],
+        )
+    )
+    if ANFU_OUTPUT.is_file():
+        results.append(
+        run(
+            "Independent real-case coefficient regression: 示範科技",
+            [
+                sys.executable,
+                "-X",
+                "utf8",
+                str(TEST_DIR / "evaluate_output.py"),
+                str(ANFU_OUTPUT),
             ],
         )
     )

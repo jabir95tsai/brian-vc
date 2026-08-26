@@ -97,11 +97,10 @@ generates and inspects real XLSX/PPTX artifacts; the latest evidence is in
 
 ## Test data
 
-Every company in this repository is fictional. The pitch decks, memos,
-prospectus fixtures and data-room samples under `brian-vc/tests/` and
-`brian-vc/skills/*/scripts/example_*` are synthetic fixtures built to exercise
-the contracts. No real deal material, and no analysis of any real company, is
-included here.
+Every company named in the published mirror of this repository is fictional.
+The pitch decks, memos, prospectus fixtures and data-room samples under
+`brian-vc/tests/` and `brian-vc/skills/*/scripts/example_*` are synthetic
+fixtures built to exercise the contracts.
 
 ## Safety and evidence policy
 
