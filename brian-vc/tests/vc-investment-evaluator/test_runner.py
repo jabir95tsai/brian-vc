@@ -302,6 +302,23 @@ class EvaluatorRunnerTests(unittest.TestCase):
             )
             self.assertIn("not acceptable", bogus.stderr)
 
+            # A substring test would let this through: "auto" is inside
+            # "not_auto_at_all". The accepted values must match outright.
+            smuggled = self.run_runner(
+                "set", str(case), "D1", "complete",
+                "--evidence", "peer_list_source=not_auto_at_all",
+                "--artifact", str(evidence), expected=2,
+            )
+            self.assertIn("exactly one of", smuggled.stderr)
+
+            # The key must head its own evidence item, not merely appear in one.
+            buried = self.run_runner(
+                "set", str(case), "D1", "complete",
+                "--evidence", "we noted peer_list_source=auto in passing",
+                "--artifact", str(evidence), expected=2,
+            )
+            self.assertIn("requires evidence", buried.stderr)
+
             for accepted in ("user_specified", "auto"):
                 self.run_runner(
                     "set", str(case), "D1", "complete",

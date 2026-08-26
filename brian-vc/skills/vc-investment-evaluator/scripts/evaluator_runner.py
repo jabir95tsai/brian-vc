@@ -41,16 +41,21 @@ FAILURE_STATES = {"partial", "blocked"}
 # Each entry maps a module to (evidence key, accepted values or markers, hint).
 PEER_LIST_SOURCES = ("user_specified", "auto")
 REDTEAM_HANDOFF_MARKER = "GP 決策框架已留白供填入"
+# match="exact": the value must be one of the accepted tokens outright. A
+# substring test here would accept "not_auto_at_all" because it contains
+# "auto". match="contains": the value is free prose that must carry a marker.
 COMPLETION_EVIDENCE_KEYS = {
     "D1": (
         "peer_list_source",
         PEER_LIST_SOURCES,
+        "exact",
         "record how the comparable list was chosen, e.g. "
         "--evidence peer_list_source=user_specified",
     ),
     "E2": (
         "redteam_handoff",
         (REDTEAM_HANDOFF_MARKER,),
+        "contains",
         "record the E2 handoff sentence from references/experts/redteam.md, e.g. "
         "--evidence \"redteam_handoff=RedTeam 提出 5 個反對理由，...，"
         f"{REDTEAM_HANDOFF_MARKER}。\"",
@@ -287,18 +292,20 @@ def missing_completion_evidence(module_id: str, evidence_values: list[str]) -> s
     requirement = COMPLETION_EVIDENCE_KEYS.get(module_id)
     if requirement is None:
         return None
-    key, accepted, hint = requirement
+    key, accepted, match, hint = requirement
     prefix = f"{key}="
     declared = [item for item in evidence_values if item.startswith(prefix)]
     if not declared:
         return f"{module_id} complete requires evidence '{prefix}...'; {hint}"
     value = declared[0][len(prefix):].strip()
-    if not any(token in value for token in accepted):
-        allowed = ", ".join(accepted)
-        return (
-            f"{module_id} evidence '{prefix}{value}' is not acceptable; "
-            f"expected one of: {allowed}"
-        )
+    if match == "exact":
+        ok = value in accepted
+        expectation = "expected exactly one of: " + ", ".join(accepted)
+    else:
+        ok = any(token in value for token in accepted)
+        expectation = "expected it to contain: " + ", ".join(accepted)
+    if not ok:
+        return f"{module_id} evidence '{prefix}{value}' is not acceptable; {expectation}"
     return None
 
 
