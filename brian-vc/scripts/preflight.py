@@ -65,6 +65,31 @@ def validate_marketplace(repo_root: Path, plugin_root: Path) -> tuple[bool, str]
     return False, "brian-vc entry not found"
 
 
+def validate_identity(plugin_root: Path, manifest: dict[str, Any]) -> dict[str, Any]:
+    """Confirm the folder the package sits in still identifies it as brian-vc.
+
+    Two layouts are legitimate. A source checkout or a plain copy keeps the
+    package in a folder named after the plugin. Codex `plugin/install`
+    materialises it as `<marketplace cache>/brian-vc/<version>/`, so there the
+    folder is the manifest version and the plugin name is one level up.
+    Anything else means the package was renamed or unpacked into the wrong
+    place, which is what this check is for.
+    """
+    name = manifest.get("name")
+    version = manifest.get("version")
+    detail = f"folder={plugin_root.name}; manifest={name}"
+    if name != "brian-vc":
+        return check(False, "plugin manifest identity", detail)
+    if plugin_root.name == "brian-vc":
+        return check(True, "plugin manifest identity", detail)
+    installed = plugin_root.parent.name == "brian-vc" and plugin_root.name == version
+    return check(
+        installed,
+        "plugin manifest identity",
+        f"{detail}; parent={plugin_root.parent.name}; version={version}",
+    )
+
+
 def validate_skill(plugin_root: Path, skill_name: str) -> list[dict[str, Any]]:
     skill_root = plugin_root / "skills" / skill_name
     skill_md = skill_root / "SKILL.md"
@@ -116,13 +141,7 @@ def run_checks(skip_python_deps: bool, strict_python_deps: bool) -> dict[str, An
         manifest = {}
         results.append(check(False, "plugin manifest", str(exc)))
     else:
-        results.append(
-            check(
-                manifest.get("name") == plugin_root.name == "brian-vc",
-                "plugin manifest identity",
-                f"folder={plugin_root.name}; manifest={manifest.get('name')}",
-            )
-        )
+        results.append(validate_identity(plugin_root, manifest))
         results.append(
             check(manifest.get("skills") == "./skills/", "plugin skills path")
         )
