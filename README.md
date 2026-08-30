@@ -135,6 +135,13 @@ prospectus fixtures and data-room samples under `brian-vc/tests/` and
 `brian-vc/skills/*/scripts/example_*` are synthetic fixtures built to exercise
 the contracts.
 
+## License
+
+None. All rights reserved — this is published for inspection, not for reuse.
+Absent a license file, the default of copyright law applies: you may read the
+repository, but you may not copy, modify or redistribute it. Ask if you want to
+use any of it.
+
 ## Safety and evidence policy
 
 - Official Taiwan market data order: MOPS, TWSE, then TPEx.
