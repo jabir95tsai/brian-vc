@@ -23,7 +23,7 @@ SOURCE = Path(__file__).resolve().parents[2]
 class InstallCopyTests(unittest.TestCase):
     def setUp(self) -> None:
         manifest = json.loads((SOURCE / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.runtime = SOURCE.parent / ".install-test-runtime" / uuid.uuid4().hex
+        self.runtime = SOURCE.parent / "_local" / ".install-test-runtime" / uuid.uuid4().hex
         self.plugin = self.runtime / "brian-vc" / manifest["version"]
         shutil.copytree(
             SOURCE,

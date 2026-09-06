@@ -1,5 +1,8 @@
 # Real case material: confidential deal data (財報、財測底稿、逐字稿、DD 報告).
 # Never belongs in the repo; the Skills read it from a path the user supplies.
+/_local/
+/.install-test-runtime/
+/tmp/
 cases/
 _fwdtest/
 

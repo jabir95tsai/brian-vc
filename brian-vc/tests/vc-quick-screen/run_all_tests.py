@@ -420,7 +420,7 @@ def _run() -> int:
     results.append(contract_format_variants())
     results.append(canonical_skeleton_contract())
 
-    docx_dir = TEST_DIR / "run-latest-docx"
+    docx_dir = PLUGIN_ROOT.parent / "_local" / "test-output" / "vc-quick-screen"
     docx_dir.mkdir(parents=True, exist_ok=True)
     docx_path = docx_dir / "星橋邊緣運算_初篩備忘_v1.docx"
     docx_path.unlink(missing_ok=True)
