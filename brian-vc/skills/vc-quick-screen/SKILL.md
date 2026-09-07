@@ -5,6 +5,9 @@ description: >
 ---
 
 # VC 案件初篩系統 vQS-1.5（輕量版 / Quick-Screen）
+
+執行前必讀 [共同行為契約](../../references/execution_contract.md)，適用於本 Skill 全流程。
+
 *用途：薄資料（單一 BP / 公開說明書 / Pitch Deck）的快速投資初判。與完整 DD 系統 `vc-investment-evaluator` 形成兩層分工。*
 *vQS-1.5：Step 1.5 新增**強制係數層反證**（轉換效率／守恆／資源可得性／財務結構／時程），並要求表格標示「層級」欄；篇幅改為下限硬、上限軟，有係數層反證時自動放寬。*
 *背景：vQS-1.4 的硬性篇幅上限會判定一份含完整能量平衡與全國供給量反證的備忘「不合格」，而該備忘正是唯一抓到財測係數層矛盾的版本。護欄該擋灌水，不該擋深度。*
@@ -30,23 +33,23 @@ description: >
 ## 【觸發後第一步：資料充足度判斷（強制）】
 
 先從 Skill 目錄執行 `python -X utf8 ../../scripts/preflight.py`。若 packaging
-檢查失敗，停止並回報缺少的 plugin 資源；若只有 standalone Python 依賴缺失，
+檢查失敗，回報缺少的 plugin 資源並停止依賴它的工作，繼續不受影響的部分；若只有 standalone Python 依賴缺失，
 平台具有對應的受管 Documents／Presentations runtime 時可繼續，否則先依輸出的
 單一安裝指令補齊依賴。
 
 輸入是資料夾時，先執行 `python -X utf8 ../../scripts/route_case.py CASE_DIR`。
-只有 `primary_skill=vc-quick-screen` 才繼續本流程；若為 L2，轉交
-`vc-investment-evaluator`。`conditional_skills` 含 `prospectus-extractor` 時，先由
-該 Skill 建公說底稿，再把精簡 payload 帶回初篩；檔名分流只是 preflight，仍須
-讀內容確認。
+使用者明確只要初篩時加 `--requested-skill vc-quick-screen`；原始需求已授權完整
+DD 時加 `--requested-skill vc-investment-evaluator`。router 只提供檔名提示，
+必須讀內容確認後才採用分級。`conditional_skills` 含 `prospectus-extractor` 時，
+由該 Skill 建公說底稿，再把精簡 payload 帶回所選流程；檔名未命中仍須查驗內容。
 
 | 級別 | 手上資料 | 走法 |
 |------|---------|------|
 | **L0 薄資料** | 單一 BP / Pitch Deck / 公開說明書 / 介紹文件 | ✅ 本 skill（初篩） |
 | **L1 部分資料** | BP + 部分財務 or 部分股東/條件，但缺查核財報或 Term Sheet | ✅ 本 skill（初篩，估值區間可做但標假設） |
-| **L2 完整 data room** | 有查核財報 + 股東名冊/股本表 + 本輪條件(Term Sheet) + 詳細三表 | ⛔ **改用 `vc-investment-evaluator`（完整 DD）** |
+| **L2 完整 data room** | 有查核財報 + 股東名冊/股本表 + 本輪條件(Term Sheet) + 詳細三表 | 依已授權範圍選擇初篩或 `vc-investment-evaluator` |
 
-判定 L2 → 告知「資料已足夠跑完整 DD，建議改用 vc-investment-evaluator」並停止。
+內容確認為 L2（或 evaluator 接受的 L2-degraded）且原始需求包含完整 DD：告知分流後直接接續既有 evaluator 流程，不停在建議。使用者明確只要初篩：留在本流程，資料齊全不擴張授權。未要求完整 DD 時先完成初篩，將升級列為後續建議。
 
 ---
 
@@ -54,7 +57,7 @@ description: >
 
 ### 快篩護欄（全流程強制）
 
-- **外部查驗預算**：Step 2 與 Step 2.2 共用單一預算；搜尋 query 合計最多 8 條，每類來源最多 1–2 條，直接開啟已知官方頁面最多 12 次。約 5 分鐘只是操作目標，不作完成判定。達上限即停止，未取得欄位標 `UNKNOWN`／`⚠️ 尚待官方來源確認`。
+- **外部查驗預算**：Step 2 與 Step 2.2 共用單一預算；搜尋 query 合計最多 8 條，每類來源最多 1–2 條，直接開啟已知官方頁面最多 12 次。約 5 分鐘只是操作目標，不作完成判定。達上限只停止新增外部查詢（搜尋與開頁），繼續使用已取得證據完成驗算、分析、缺口清單、報告與 QA。記錄實際 query／開頁次數與未完成查驗；未取得欄位標 `UNKNOWN`／`⚠️ 尚待官方來源確認`。
 - **篇幅（下限硬、上限軟）**：下限 2,500 個非空白字元且 80 行為**硬性**——低於此通常代表分析不足。上限 6,000 字元／180 行是**軟性目標**：超出時先合併重複觀察、縮短敘述，但**深度不得為了篇幅被刪**。當 Step 1.5 產出 ≥2 條係數層反證時，上限自動放寬至 16,000 字元／400 行。任何情況下都不得刪除紅旗、量化驗算、來源、缺失或免責。灌水仍受 16,000／400 硬上限規範。
 - **優先級**：只保留會改變「進完整 DD／觀望／Pass」的事實。背景知識、完整研究史與低影響細節不進正文。
 
@@ -188,6 +191,6 @@ description: >
 ```
 
 ## 【與完整系統的銜接】
-本 skill = 第一層（triage / screening，吃薄資料、快、帶輕量專家視角、不算 IRR）。`vc-investment-evaluator` = 第二層（完整 DD：六專家完整人格、估值、IRR、五件式 IC 包）。判定 L2 或必取清單補齊 → 升級至第二層。第二層 Phase 0 偵測到僅單一 BP 時亦會建議回到本 skill。
+本 skill = 第一層（triage / screening，吃薄資料、快、帶輕量專家視角、不算 IRR）。`vc-investment-evaluator` = 第二層（完整 DD：六專家完整人格、估值、IRR、五件式 IC 包）。判定 L2 或必取清單補齊且使用者已授權完整 DD → 告知後接續第二層；只要初篩則完成本層。第二層 Phase 0 偵測到僅單一 BP 時亦會建議回到本 skill。
 
 *版本：vQS-1.5 | 2026-08-15 | 與 vc-investment-evaluator OpenAI port 配套*

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import copy
+import importlib.util
 import os
 import shutil
 import subprocess
@@ -275,6 +277,75 @@ class EvaluatorRunnerTests(unittest.TestCase):
                 "--evidence", key_facts.get(module_id, "ok"),
                 "--artifact", str(evidence),
             )
+
+    def test_blocked_edge_exception_is_narrow(self) -> None:
+        spec = importlib.util.spec_from_file_location("runner_policy", RUNNER)
+        runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(runner)
+        with case_workspace() as raw:
+            state = runner.init_state(raw.resolve(), "SYNTHETIC_EDGES", "blocked", False)
+            for key in state["modules"]:
+                state["modules"][key]["status"] = "complete"
+            for key in ("D2", "D3"):
+                state["modules"][key].update(status="blocked", reason="missing terms",
+                    evidence=["blocked_as_designed=missing_transaction_terms"], artifacts=[{"path": "refusal.md"}])
+            self.assertEqual(runner.gate_status(state, "D_GATE"), "blocked")
+            self.assertEqual(runner.unmet_dependencies(state, "F1"), [])
+            self.assertEqual(runner.unmet_dependencies(state, "E1"), [])
+            self.assertIn("D2", runner.unmet_dependencies(state, "D3"))
+            for change in ("mode", "reason", "marker", "artifact", "retry", "partial", "C1", "D1"):
+                variant = copy.deepcopy(state)
+                module = variant["modules"]["D2"]
+                if change == "mode": variant["mode"] = "full"
+                elif change == "reason": module["reason"] = ""
+                elif change == "marker": module["evidence"] = ["tool error"]
+                elif change == "artifact": module["artifacts"] = []
+                elif change == "retry": module["retry_exhausted"] = True
+                elif change == "partial": module["status"] = "partial"
+                else: variant["modules"][change]["status"] = "blocked"
+                with self.subTest(change=change):
+                    self.assertTrue(runner.unmet_dependencies(variant, "F1"))
+
+    def test_retry_exhaustion_preserves_independent_branch(self) -> None:
+        with case_workspace() as raw:
+            case = raw / "case"
+            self.run_runner("init", str(case), "--case-id", "SYNTHETIC_RETRY")
+            self._advance_to(case, "C1")
+            for status in ("partial", "blocked"):
+                self.run_runner("set", str(case), "C1", status, "--reason", "synthetic tool failure")
+            self.run_runner("set", str(case), "C2", "complete", "--evidence", "independent",
+                            "--artifact", str(case / "ev.json"))
+            self.run_runner("set", str(case), "E1", "in_progress", expected=2)
+            report = json.loads(self.run_runner("status", str(case), "--json").stdout)
+            self.assertEqual(report["modules"]["C2"]["status"], "complete")
+            self.assertEqual(report["modules"]["C1"]["failed_attempts"], 2)
+            self.assertTrue(report["modules"]["C1"]["retry_exhausted"])
+
+    def test_source_change_invalidates_only_dependent_branch_and_resumes(self) -> None:
+        with case_workspace() as raw:
+            case = raw / "case"
+            self.run_runner("init", str(case), "--case-id", "SYNTHETIC_RESUME")
+            self._advance_to(case, "D2")
+            source = case / "industry-source.md"
+            source.write_text("synthetic industry version 1", encoding="utf-8")
+            self.run_runner("set", str(case), "C3", "complete", "--evidence", "source read",
+                            "--artifact", str(source))
+            source.write_text("synthetic industry version 2", encoding="utf-8")
+            self.run_runner("verify", str(case), "--invalidate-stale", expected=1)
+            report = json.loads(self.run_runner("status", str(case), "--json").stdout)
+            self.assertEqual(report["modules"]["C3"]["status"], "partial")
+            self.assertEqual(report["modules"]["C3"]["failed_attempts"], 0)
+            for key in ("C4", "D1", "D2", "F1"):
+                self.assertEqual(report["modules"][key]["status"], "pending")
+            for key in ("B3", "C1", "C2"):
+                self.assertEqual(report["modules"][key]["status"], "complete")
+            self.run_runner("set", str(case), "C3", "complete", "--evidence", "version 2 rechecked",
+                            "--artifact", str(source))
+            for key in ("C4", "D1"):
+                self.run_runner("set", str(case), key, "complete", "--evidence",
+                                "peer_list_source=auto" if key == "D1" else "rechecked",
+                                "--artifact", str(case / "ev.json"))
+            self.run_runner("verify", str(case))
 
     def test_d1_cannot_complete_without_declaring_the_peer_list_source(self) -> None:
         """The rule binds when D1 claims completion, not at workbook assembly.

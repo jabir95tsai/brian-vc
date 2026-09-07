@@ -60,6 +60,7 @@ Skills 引導 AI 閱讀來源、分析與判斷；Python／JavaScript 工具負�
 | 安裝、依賴與排錯；AI 安裝步驟 | [INSTALL.md](INSTALL.md) |
 | 三個工作流程的完整指令 | [初篩](brian-vc/skills/vc-quick-screen/SKILL.md) · [公說萃取](brian-vc/skills/prospectus-extractor/SKILL.md) · [投資盡調](brian-vc/skills/vc-investment-evaluator/SKILL.md) |
 | 架構、資料流程、測試與開發入口 | [專案指南](docs/PROJECT.md) |
+| GPT-6 Astra 使用、契約調整與新對話測試 | [遷移紀錄](docs/ASTRA6_MIGRATION.md) |
 | Plugin 包裝與安裝來源 | [Plugin manifest](brian-vc/.codex-plugin/plugin.json) · [Marketplace manifest](.agents/plugins/marketplace.json) |
 
 ## 資料與使用邊界

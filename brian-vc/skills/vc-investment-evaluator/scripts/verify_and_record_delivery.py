@@ -29,6 +29,12 @@ def inside(child: Path, parent: Path) -> bool:
         return False
 
 
+def delivery_mode_error(mode: str, state: dict, package: dict) -> str | None:
+    if mode != state.get("mode", "full") or mode != package.get("content", {}).get("mode", "full"):
+        return "delivery mode must match manifest and frozen content"
+    return None
+
+
 def workbook_audit_error(audit: dict, mode: str) -> str | None:
     """Return why this audit cannot be delivered in ``mode``, or None if it can.
 
@@ -107,6 +113,17 @@ def main() -> int:
         if not item.is_file() or not inside(item, case_dir):
             print(f"ERROR: required delivery file must exist inside case_dir: {item}", file=sys.stderr)
             return 2
+    manifest_path = case_dir / ".vc-evaluator" / "artifact-manifest.json"
+    state = json.loads(manifest_path.read_text(encoding="utf-8"))
+    package = json.loads(args.context_package.read_text(encoding="utf-8"))
+    mode_error = delivery_mode_error(args.mode, state, package)
+    if mode_error:
+        print(f"ERROR: {mode_error}", file=sys.stderr)
+        return 2
+    registered = state["modules"]["F1"].get("artifacts", [])
+    if not any((case_dir / item["path"]).resolve() == args.context_package.resolve() for item in registered):
+        print("ERROR: context package must be the registered F1 artifact", file=sys.stderr)
+        return 2
     audit = json.loads(args.workbook_audit.read_text(encoding="utf-8"))
     audit_error = workbook_audit_error(audit, args.mode)
     if audit_error:

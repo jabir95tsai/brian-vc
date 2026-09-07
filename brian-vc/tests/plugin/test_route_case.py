@@ -51,6 +51,22 @@ class RouteCaseTests(unittest.TestCase):
         self.assertEqual(result["execution_mode"], "blocked")
         self.assertEqual(result["l2_missing"], ["term_sheet"])
 
+    def test_explicit_screening_keeps_l2_maturity_without_expanding_scope(self) -> None:
+        for name in ("audited.pdf", "CapTable.xlsx", "TermSheet.pdf", "三表.xlsx"):
+            self.touch(name)
+        result = route.classify(self.runtime, requested_skill="vc-quick-screen", allow_degraded=True)
+        self.assertEqual(result["data_level"], "L2")
+        self.assertEqual(result["primary_skill"], "vc-quick-screen")
+        self.assertEqual(result["execution_mode"], "quick-screen")
+        self.assertIn("檔名", result["warning"])
+
+    def test_explicit_dd_with_l2_routes_on_without_confirmation_state(self) -> None:
+        for name in ("audited.pdf", "CapTable.xlsx", "TermSheet.pdf", "三表.xlsx"):
+            self.touch(name)
+        result = route.classify(self.runtime, requested_skill="vc-investment-evaluator")
+        self.assertEqual(result["status"], "ready")
+        self.assertEqual(result["primary_skill"], "vc-investment-evaluator")
+
     def test_prospectus_plus_audited_reports_routes_fact_dd_but_blocks_returns(self) -> None:
         self.touch("0000_現增公開說明書_202606.pdf")
         self.touch("0000_114年報_合併_查核財務報告.pdf")

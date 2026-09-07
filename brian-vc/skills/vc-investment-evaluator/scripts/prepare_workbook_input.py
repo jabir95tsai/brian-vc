@@ -115,8 +115,8 @@ def validate(payload: dict) -> None:
     else:
         for key in ("investment", "pre_money", "post_money"):
             require(deal.get(key) not in (None, ""), f"deal.{key} is required")
-        require(float(deal["investment"]) > 0, "deal.investment must be positive")
-        require(float(deal["post_money"]) > 0, "deal.post_money must be positive")
+            require(finite_number(deal[key]) and float(deal[key]) > 0,
+                    f"deal.{key} must be finite and positive")
     history = payload["financial_history"]
     require(isinstance(history, list) and history, "financial_history must contain at least one row")
     for row in history:
@@ -149,11 +149,9 @@ def validate(payload: dict) -> None:
     assumptions = payload["assumptions"]
     years = assumptions.get("forecast_years", [])
     scenarios = assumptions.get("scenarios", {})
-    if blocked and not all(
-        isinstance(scenarios.get(name), dict) and "revenue_growth" in scenarios[name]
-        for name in SCENARIOS
-    ):
-        # No usable forecast assumptions: keep the factual sheets, skip the model.
+    if blocked:
+        # Supplied operating assumptions do not authorize transaction modeling.
+        # Match the blocked workbook/deck path even if old scenario rows remain.
         payload["forecast_available"] = False
         return
     payload["forecast_available"] = True
@@ -208,7 +206,7 @@ def attach_return_matrices(payload: dict) -> dict:
 
 def attach_independent_forecast(payload: dict) -> dict:
     """Prefer explicit operating-driver rows; retain the ratio proxy as fallback."""
-    if not payload.get("forecast_available", True):
+    if is_blocked(payload) or not payload.get("forecast_available", True):
         payload["independent_forecast"] = {
             "generator": "scripts/prepare_workbook_input.py",
             "status": "blocked",

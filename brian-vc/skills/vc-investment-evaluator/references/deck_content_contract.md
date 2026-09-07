@@ -27,6 +27,12 @@ missing comparables, team, or other unavailable content. The gap must state
 that evidence is unverified or pending and never counts as a verified row.
 Do not invent content to satisfy layout.
 
-Run `qa_deck.py --mode full|degraded|quick-screen`; add `--full` for the
+In `blocked` mode, retain facts, sources, conflicts, gaps and RedTeam. Valuation,
+independent forecast and IRR/Multiple sections show the reason they cannot be
+computed. Do not insert assumed deal terms or zero-valued results. Delivery can
+complete only as factual DD under the pipeline's documented blocked edge policy;
+it is not transaction-DD completion or investment approval.
+
+Run `qa_deck.py --mode full|degraded|blocked|quick-screen`; add `--full` for the
 Full-critical variant. Structural QA does not replace inspection of rendered
 PNGs and layout JSON.

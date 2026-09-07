@@ -6,6 +6,7 @@
 
 | 契約 | 唯一負責範圍 |
 |---|---|
+| `../../../references/execution_contract.md` | 三 Skill 共用授權、執行範圍、runtime 與回報 |
 | `pipeline_contract.md` | Stage、Module ID、相依關係、產物、狀態、完成閘門 |
 | `phase0_playbook.md` | 文件／PDF／公說的讀取與萃取細節 |
 | `experts/*.md` | 各專家的分析方法、最低輸出與 payload |
@@ -37,14 +38,26 @@
 
 缺這一項或值不合法，`complete` 直接被拒；其餘 Module 不受影響。
 
-### 重試上限（錯兩次即停）
+### 互動／背景執行（A1、D1、E3 共用）
+
+執行方式寫在 A1 capability log；不增加第二份狀態表，也不與 manifest／payload 的 `mode=full|degraded|blocked` 混用。
+
+- 使用者明確要求自動、背景或完整自主完成時，沿用授權採背景方式；未指定則預設互動。「完整 DD」只指定工作範圍，不單獨等於自動授權。
+- D1 使用者已指定同業清單：直接沿用，不重複詢問、不擅自增刪。自動清單在互動方式下先準備公司、納入理由、比較維度，再請使用者確認後查價；背景方式自行定案，落地選擇依據。兩者均須 `peer_list_source`。
+- E3 先完成 ContentFreeze 六問，準備內容版本、來源日期、交易基礎、未解衝突與缺口摘要。互動方式只等待尚未取得的確認；背景方式記錄主控自答、依據及「自動凍結」。使用者已確認且版本／基礎未改變時不再索取。
+- 等待期間繼續不依賴該決定的模組；未回覆不等於批准。新來源改變已確認基礎時要揭露影響，依原授權方式重新定版。
+- blocked 只凍結可支持的事實與缺口，交易六問中不可計算項寫明原因，不假設填值；未解關鍵衝突仍不得凍結。內容版本凍結與投資決策批准是兩件事，GP 決策欄仍留白。
+
+### 重試上限（同一模組錯兩次即停）
 
 狀態只有以上六種，重試次數不新增第七種狀態，改以 manifest 的 `failed_attempts` 欄位表達：
 
 - 同一 Module 每被記錄一次 `partial` 或 `blocked`，`failed_attempts` 加一；記錄 `complete` 或 `not_applicable` 時歸零。
-- `failed_attempts` 達到 2 即停止重試：該 Module 標 `retry_exhausted`，失敗原因保留在 `reason`，並回報使用者處理，不得繼續自動重跑。
+- `failed_attempts` 達到 2 即停止重試：該 Module 標 `retry_exhausted`，失敗原因保留在 `reason`，並回報原因與解除條件，不得繼續自動重跑該模組；必要相依下游等待，可獨立執行的模組繼續。
 - 已 `retry_exhausted` 的 Module 再次記錄失敗會被 runner 拒絕。只有人工明確把該 Module 設回 `pending`（決定重跑）才清除計數與旗標。
-- `verify --invalidate-stale` 造成的降級是產物完整性問題，不是執行失敗，不計入 `failed_attempts`。
+- 不得自動設回 `pending` 迴避上限；人工明確決定重跑才可使用既有 reset 路徑。runner 保留該相容操作，不把一般續跑當成人工重試授權。
+- 一次工具呼叫失敗不直接等於一次模組失敗。主控判斷該模組結果後才記錄 `partial`／`blocked`；runner 拒絕的 set 不增加計數。不要為回報相同缺件而反覆 set。
+- `verify --invalidate-stale` 造成的降級是產物完整性問題，不是執行失敗，不計入 `failed_attempts`，也不清除既有耗盡旗標。直接失效模組為 `partial`，相依下游回 `pending`；獨立模組不變。
 
 ### case payload 的 `mode`
 
@@ -62,6 +75,17 @@ Module 狀態描述單一模組；case payload 的 `mode` 描述整案可算到�
 `dd_status` 沿用 case mode，`structural_qa_status` 與 `visual_qa_status` 分開，
 `delivery_status`／`ready_for_delivery` 只有在本次視覺 QA 有落地證據時才可完成。
 禁止以單一 `status=complete` 同時代表這些不同層級。
+
+### blocked 事實類交付的相依例外
+
+不新增 mode、Module、Gate 狀態或第二份 manifest。`D_GATE` 仍為 `blocked`，D2／D3 不得標 `complete`。僅限缺交易條件造成的設計性阻塞：
+
+1. manifest `mode=blocked`；C4 與 D1 已 complete；B／C 的證據與衝突門檻照常。
+2. D2、D3 各記錄一次 `blocked`，具體 `reason`、至少一個 hash 產物（阻塞說明／缺口、可支持事實）及具名 evidence `blocked_as_designed=missing_transaction_terms`；不得有 `retry_exhausted`。此標記不適用工具失敗、未解衝突或任意缺件。
+3. E1、E3 可消費上述 D2／D3 的阻塞證據，僅做事實整合、反方審查與限制揭露；D3 本身不能利用例外完成建模。
+4. F1 對 D_GATE 的相依僅在上述兩個模組均合格時滿足；其他 B／C／E gates 仍須 complete。canonical package 保留真實 `D_GATE=blocked`，並核對 payload／manifest mode 與 canonical 計算拒絕區塊一致。
+5. F1 凍結前及 F3 交付前仍驗證來源產物 hash 與契約版本；失效不得放行。F2／F3 仍須結構、公式與本次視覺 QA；blocked workbook 為七分頁缺口呈現，要求 `BLOCKED_AS_DESIGNED` 與基準財測公式數 0。
+6. `F_GATE=complete` 只表示該 mode 的交付完成。blocked 事實類交付可以完成，交易 DD／估值／IRR／投資可行性仍未完成。full／degraded 路徑的 D_GATE 必須 complete，不能使用此例外。
 
 ## 3. Module registry
 
@@ -158,7 +182,9 @@ F3 <- F2
 - C3 Watchlist 已交給 C4 與 D1。
 - 任一失敗均以 Module ID 標 `partial` 或 `blocked`。
 
-### D_GATE｜估值與報酬可使用
+### D_GATE｜估值與報酬可使用（full／degraded）
+
+blocked 按第 2 節相依例外交付事實，以下計算門檻不適用為完成理由，D_GATE 保留 blocked。
 
 - CitationTable 的定稿數字可追溯至一手來源；例外使用二手資料時有明確警語。
 - `comparables` 只含 verified 列；公司提供、null、缺資料日或缺來源 URL 的候選列留在 `unverified_comparables`，不得計入數量 Gate。
@@ -275,9 +301,11 @@ raw 檔路徑：/outputs/...
 
 ## 8. Context 與 resume
 
-- 主控只保存 FactSheet、payload、狀態與路徑。
+- 主控只保存 FactSheet、payload、狀態與路徑。只有主控整合／寫入 canonical manifest；子代理完整 raw 落地並回傳既有精簡 payload，不並行覆寫 manifest。
+- C1／C2／C3 可平行，C4 等待 C3；D2、E1、E2 依依賴圖隔離派工，預設沿用主模型，不硬編碼其他模型。沒有獨立 agent 能力時依原圖順序降級並記錄，不能聲稱獨立代理審查。
 - raw 全文以檔案交接；需要簡報素材時只切讀 `## DECK_EXPORT`。
-- 完成證據必須與本次來源版本相符。來源檔內容變更後，受影響的下游 Module 全部回到 `pending`。
+- 完成證據必須與本次來源版本相符。來源快照須位於案件內並登錄為使用該來源之模組 artifact；只把路徑放在 evidence 字串不會追蹤 hash。續跑先 `verify --invalidate-stale`：直接失效模組為 partial，受影響下游回 pending，獨立分支保留；來源語意與內文仍須重新查驗。
+- `pipeline contract changed` 代表契約版本不同，verify 不會自動更新 hash 或認可歷史狀態。先比較版本並重驗；需要新版完整交付時使用不覆蓋舊結果的新案件目錄重建狀態，不用 `init --force` 偽造續跑成功。
 - 失敗隔離只允許繼續沒有相依關係的 Module；不能讓下游在缺關鍵輸入時得到 `complete`。
 
 ## 9. 實作邊界

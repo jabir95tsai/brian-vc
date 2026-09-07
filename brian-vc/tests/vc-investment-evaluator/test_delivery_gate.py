@@ -51,6 +51,13 @@ def fake_pptx(path: Path, slides: int) -> Path:
 
 
 class WorkbookAuditGateTests(unittest.TestCase):
+    def test_delivery_modes_must_agree_with_frozen_content_and_manifest(self) -> None:
+        for mode in ("full", "degraded", "blocked"):
+            self.assertIsNone(verify.delivery_mode_error(mode, {"mode": mode}, {"content": {"mode": mode}}))
+            for other in {"full", "degraded", "blocked"} - {mode}:
+                self.assertIsNotNone(verify.delivery_mode_error(mode, {"mode": other}, {"content": {"mode": mode}}))
+                self.assertIsNotNone(verify.delivery_mode_error(mode, {"mode": mode}, {"content": {"mode": other}}))
+
     def test_blocked_audit_is_deliverable_in_blocked_mode(self) -> None:
         self.assertIsNone(verify.workbook_audit_error(audit("BLOCKED_AS_DESIGNED"), "blocked"))
 

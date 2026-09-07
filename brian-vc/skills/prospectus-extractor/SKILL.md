@@ -11,6 +11,8 @@ description: >
 
 # Prospectus Extractor v2.0
 
+執行前必讀 [共同行為契約](../../references/execution_contract.md)，適用於本 Skill 全流程。
+
 本 Skill 的唯一資料源是 `case_data.json`。所有 Markdown 與 Excel 都從它渲染；
 不得分別手工維護。資料與視覺樣式分離，預設使用中性樣式，使用者可另指定
 style adapter，但樣式不得改變數字、狀態、來源或結論。
@@ -25,12 +27,12 @@ style adapter，但樣式不得改變數字、狀態、來源或結論。
 ## 邊界與必要輸入
 
 先從 Skill 目錄執行 `python -X utf8 ../../scripts/preflight.py`。若 packaging
-檢查失敗，停止並回報缺少的 plugin 資源；缺少 standalone Python 依賴時，依
+檢查失敗，回報缺少的 plugin 資源並停止依賴它的工作，繼續不受影響的部分；缺少 standalone Python 依賴時，依
 輸出的 plugin 根目錄單一安裝指令處理。
 
 輸入是資料夾時可先執行 `python -X utf8 ../../scripts/route_case.py CASE_DIR`；
-只有 `prospectus_triggered=true` 才執行本 Skill。這個 router 不取代 PDF
-內容確認，若實際文件不是台灣公開說明書，回報 `not_applicable`。
+`prospectus_triggered=true` 是查驗提示；未命中也須依使用者指定來源讀取內容。
+以 PDF 內容確認是否為台灣公開說明書，否則回報 `not_applicable`。
 
 必要輸入：
 
@@ -47,10 +49,10 @@ style adapter，但樣式不得改變數字、狀態、來源或結論。
 Yahoo 或其他二手頁面只可協助定位或交叉驗證，不能取代一手原文。Chrome／
 內建 Browser 是取得頁面的工具，不是資料來源本身。
 
-執行前安裝已宣告的 Python 依賴：
+執行前檢查平台受管 Python 是否已有所需依賴；缺少時才在適當環境安裝 plugin 根目錄已宣告依賴（從 Skill 目錄執行）：
 
 ```powershell
-python -m pip install -r requirements.txt
+python -m pip install -r ../../requirements.txt
 ```
 
 Step 1 不要求 Poppler；頁數、書籤與文字層由 `pypdf` 處理。掃描頁轉圖優先

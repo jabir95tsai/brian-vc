@@ -6,12 +6,14 @@ description: >
 
 # VC 投資評估系統 v5.0
 
+執行前必讀 [共同行為契約](../../references/execution_contract.md)，適用於本 Skill 全流程。
+
 本 Skill 是完整盡調的主控流程，不是投資建議或自動決策器。輸出屬內部研究草稿；「進場／不進場」、投資金額與最終條件由 GP 決定。
 
 ## 先讀什麼
 
 先從 Skill 目錄執行 `python -X utf8 ../../scripts/preflight.py`。若 packaging
-檢查失敗，停止並回報缺少的 plugin 資源；Excel／PPTX authoring 前另載入平台
+檢查失敗，回報缺少的 plugin 資源並停止依賴它的工作，繼續不受影響的部分；Excel／PPTX authoring 前另載入平台
 受管的 Spreadsheets／Presentations runtime。
 
 輸入是資料夾時，再執行 `python -X utf8 ../../scripts/route_case.py CASE_DIR`。
@@ -76,12 +78,12 @@ F3 <- F2
 
 ### A1 Preflight
 
-1. 設定 `case_id=YYYYMMDD_簡稱`，再以 `scripts/evaluator_runner.py init CASE_DIR --case-id CASE_ID` 建立本案唯一 artifact manifest。後續每個 Module 都以 `set` 記錄狀態、證據與本次產物，不得另建第二份狀態表。
+1. 設定 `case_id=YYYYMMDD_簡稱`，再以 `scripts/evaluator_runner.py init CASE_DIR --case-id CASE_ID` 建立本案唯一 artifact manifest（先盤點能力並查驗 A2 所需文件以決定 `--mode full|degraded|blocked`，再 init 並依序記錄 A1／A2；不把互動／背景寫進 mode）。後續每個 Module 都以 `set` 記錄狀態、證據與本次產物，不得另建第二份狀態表。
 2. 確認 `vc-quick-screen`、`prospectus-extractor` 與本 Skill scripts 可讀。獨立執行 F3 的 `scripts/qa_deck.py` 前，安裝 `../../requirements.txt` 宣告的 `python-pptx`；平台內建 Presentations runtime 可直接使用其既有環境。
-3. 檢查是否能啟動獨立 agent。可用時，C1–C4、D2、E1、E2 優先隔離執行；不可用時按相同契約順序執行並逐模組落地，不能用摘要取代完整 raw。
+3. 檢查是否能啟動獨立 agent。可用時，C1–C4、D2、E1、E2 優先隔離執行，預設沿用主模型；不可用時按相同契約順序執行並逐模組落地，不能用摘要取代完整 raw。
 4. 續跑時沿用原 ID，先執行 runner `verify --invalidate-stale`，只跳過證據仍有效的 `complete` 或 `not_applicable` Module。
-5. 判定互動模式或背景模式。互動模式在同業清單與 ContentFreeze 徵求確認；背景模式自行完成並把決策依據寫入 log，不得假裝取得使用者確認。
-6. 錯兩次即停：同一 Module 被記錄第二次 `partial` 或 `blocked` 時，runner 標記重試上限已到，第三次失敗會被拒絕。把失敗原因留在 manifest 並回報使用者，不得無限重試；確定要重跑時，先人工把該 Module 設回 `pending`。計數規則見 `references/pipeline_contract.md`。
+5. 依 `references/pipeline_contract.md` 的「互動／背景執行」決定模式：使用者明確要求自動、背景或完整自主完成時沿用授權；未指定預設互動。與 payload 的三種 mode 分開記錄於 capability log。
+6. 同一 Module 第二次記錄 `partial`／`blocked` 後停止該模組的自動重試，保留 `failed_attempts`／`retry_exhausted`；繼續無相依的模組。不得自動設回 `pending` 規避上限；工具錯誤、模組結果、失效與人工重跑的精確計數見 `references/pipeline_contract.md`。
 
 ### A2 Data Gate
 
@@ -167,7 +169,7 @@ C1、C2、C3 可平行；C4 等 C3 Watchlist。每位專家只讀指定證據，
 1. **使用者指定**：使用者已給個股或代號時，以該清單為準；不得用自動清單覆蓋或擅自增刪，需要補充時另列並標明為建議。
 2. **自動生成**：沿用 C3 Watchlist，再以同產業龍頭補全到足以比較的家數。
 
-互動情境下自動清單先請使用者過目再查價；背景情境直接產生，不等待確認。兩種情境都必須在 CitationTable 標明清單來源為 `user_specified` 或 `auto`，並逐家記錄納入理由。
+使用者指定清單直接沿用，不重複確認。自動清單依 pipeline 的互動／背景契約處理：互動模式先備妥公司、納入理由與比較維度再確認及查價；背景模式自行定案並記錄依據。等待期間繼續不依賴清單的工作。兩種情境都必須在 CitationTable 標明清單來源為 `user_specified` 或 `auto`，並逐家記錄納入理由。
 
 以定案清單為骨架，逐家公司查驗同業數字。來源品質順序固定：
 
@@ -202,8 +204,11 @@ openpyxl 產生新工作簿。builder 產出無公說 11 分頁 Factbase 與七�
 有公說時 Factbase 必須沿用 extractor 35 分頁母版，不可用精簡版覆蓋。
 
 最後以同一受管 runtime 執行 `scripts/verify_evaluator_workbooks.mjs`，驗收精確
-分頁順序、公式錯誤、基準模型公式數、IRR／Multiple 與 Checks。只有 audit
+分頁順序、公式錯誤、基準模型公式數、IRR／Multiple 與 Checks。full／degraded 只有 audit
 JSON 顯示 `formula_error_count=0`、`model_checks=OK` 才可將 D3 標 complete。
+blocked 仍產出含缺件說明的七分頁工作簿，但不得算 IRR／財測；audit 必須為
+`BLOCKED_AS_DESIGNED`、基準財測公式數 0，D2／D3 維持 blocked。事實類下游
+依 pipeline 的具名阻塞證據規則繼續，不把 D_GATE 改成 complete。
 
 ### Fund Profile
 
@@ -248,7 +253,7 @@ GP 決策欄位固定留白：
 
 ### E3 ContentFreeze
 
-確認 IRR 退出基礎、財測版本、同業日期、投前後估值、股數與攤薄、核心收入可信度。互動模式等使用者確認；背景模式把主控自答與依據寫入 `{case_id}_ContentFreeze.md` 並標示「自動凍結」。未解關鍵衝突不得凍結。
+依 pipeline 的「互動／背景執行」與 ContentFreeze 六問，先備妥版本、來源日期、交易基礎、衝突與缺口摘要。互動模式只等待尚未取得的確認；背景模式記錄自答與依據並標「自動凍結」。等待時繼續獨立工作，未回覆不等於批准。blocked 的交易問題標明不可計算及原因，只凍結可支持的事實與限制；未解關鍵衝突不得凍結。內容版本凍結不代表批准投資。
 
 ## Stage F｜交付與 QA
 
@@ -256,7 +261,7 @@ GP 決策欄位固定留白：
 
 先彙整並凍結 Factbase、FactSheet、Coverage、ConflictLog、專家 raw／payload、CitationTable、財測、IRR、RedTeam 與 ContentFreeze。分析內容是唯一事實來源；渲染器不得改寫計算或證據。
 
-Stage E 各 Gate 完成後執行：
+依 pipeline 完成 Stage E（blocked 事實類交付允許 D_GATE 保持 blocked）後執行：
 
 ```powershell
 python -X utf8 scripts/assemble_canonical_package.py CASE_DIR CASE_DIR\prepared_case.json
@@ -303,7 +308,7 @@ python -X utf8 scripts/replay_evaluator_case.py CASE_INPUT.json OUTPUT_DIR --mod
 - ContextPackage
 - 專家原始底稿合集與各 raw
 
-以 `scripts/qa_deck.py --mode full|degraded|quick-screen` 做 PPTX 結構檢查；它不取代視覺 QA。Excel 必須可開啟、公式可追溯且沒有公式錯誤。任何要求產物失敗時，整案只能回報 `partial` 或 `blocked`，並列出未完成 Module ID，不得回報完整完成。
+以 `scripts/qa_deck.py --mode full|degraded|blocked|quick-screen` 做 PPTX 結構檢查；它不取代視覺 QA。Excel 必須可開啟、公式可追溯且沒有公式錯誤。任何要求產物失敗時，整案只能回報 `partial` 或 `blocked`，並列出未完成 Module ID，不得回報完整完成。
 
 先逐頁檢視 builder 輸出的 PNG 與 layout JSON，確認無裁切、重疊或不可讀小字，
 再把這次覆核記錄成契約要求的報告：
@@ -338,7 +343,7 @@ audit 的 `model_checks=OK`；`blocked` 要求 `BLOCKED_AS_DESIGNED` 且
 `formula_count_in_base_forecast=0`。blocked 案報 `OK` 代表模型算了不該算的東西，
 同樣不予放行。
 
-交付前執行 `scripts/evaluator_runner.py verify CASE_DIR --invalidate-stale`，再執行 `status`。只有 `F_GATE=complete` 且 verify 通過時可回報完整完成。
+交付前執行 `scripts/evaluator_runner.py verify CASE_DIR --invalidate-stale`，再執行 `status`。只有 `F_GATE=complete` 且 verify 通過時可回報該 mode 的交付完成；blocked 只代表事實類交付完成，交易 DD 與投資可行性仍受阻。
 
 ## 跨 Stage 強制規則
 
@@ -348,7 +353,8 @@ audit 的 `model_checks=OK`；`blocked` 要求 `BLOCKED_AS_DESIGNED` 且
 - **M-CTX-4**：只在需要時以 `scripts/slice_toolresult.py` 切讀 `## DECK_EXPORT`。
 - **M-CTX-5**：單一專家失敗不阻斷可獨立執行的模組，但最終必須列缺口。
 - **M-CTX-6**：payload ≤400 字，深度放 raw 與 DECK_EXPORT。
-- **M-CTX-7**：無獨立 agent 時順序降級，仍遵守相同產物與閘門。
+- **M-CTX-7**：無獨立 agent 時順序降級，仍遵守相同產物與閘門；記錄限制，不宣稱獨立代理審查。
+- 子代理只讀指定證據、完整 raw 落地、回傳既有精簡 payload；只有主控寫入 canonical manifest，避免並行覆寫。
 - 所有事實標來源；所有推測標「推測」或「不確定」；數字標單位與期間。
 - 新功能必須依 `references/pipeline_contract.md` 的擴充規則新增 Module，不得把跨階段邏輯散插進多個段落。
 

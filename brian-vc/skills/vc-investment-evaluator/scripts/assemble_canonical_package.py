@@ -59,15 +59,41 @@ def main() -> int:
         return status_result.returncode
     status_report = json.loads(status_result.stdout)
     gates = status_report["gates"]
-    incomplete = [gate for gate in REQUIRED_GATES if gates.get(gate) != "complete"]
+    # Use the runner's canonical edge policy, including documented factual-only
+    # delivery. D_GATE remains blocked in the package; never relabel D2/D3.
+    incomplete = status_report["modules"]["F1"]["unmet_dependencies"]
     if incomplete:
         print(f"ERROR: cannot freeze; incomplete gates: {', '.join(incomplete)}", file=sys.stderr)
         return 2
     payload = json.loads(content.read_text(encoding="utf-8"))
+    if payload.get("mode", "full") != state.get("mode", "full"):
+        print("ERROR: prepared content mode differs from manifest", file=sys.stderr)
+        return 2
     for key in ("return_matrix", "independent_forecast", "deck"):
         if key not in payload:
             print(f"ERROR: prepared content missing {key}", file=sys.stderr)
             return 2
+    if state.get("mode") == "blocked":
+        from prepare_workbook_input import validate, attach_return_matrices, attach_independent_forecast
+
+        expected = json.loads(content.read_text(encoding="utf-8"))
+        try:
+            validate(expected)
+            attach_return_matrices(expected)
+            attach_independent_forecast(expected)
+        except ValueError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 2
+        if any(payload[key] != expected[key] for key in ("return_matrix", "independent_forecast")):
+            print("ERROR: blocked content must preserve canonical calculation refusals", file=sys.stderr)
+            return 2
+    verified = subprocess.run(
+        [sys.executable, str(runner), "verify", str(case_dir), "--json"],
+        text=True, encoding="utf-8", capture_output=True,
+    )
+    if verified.returncode:
+        print(verified.stderr or verified.stdout, file=sys.stderr)
+        return verified.returncode
     artifacts = []
     for module_id, module in state["modules"].items():
         for artifact in module.get("artifacts", []):

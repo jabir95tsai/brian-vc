@@ -590,7 +590,7 @@
             ]
           },
           "assumptions": {
-            "description": "Blocked cases retain the three named scenario objects for schema stability, but may omit numeric forecast assumptions rather than invent them."
+            "description": "Blocked cases retain scenario objects for evidence only; supplied operating assumptions never enable independent forecast or return calculations."
           }
         }
       },
@@ -602,7 +602,21 @@
               "investment",
               "pre_money",
               "post_money"
-            ]
+            ],
+            "properties": {
+              "investment": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "pre_money": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "post_money": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
           },
           "assumptions": {
             "properties": {

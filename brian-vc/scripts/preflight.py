@@ -173,6 +173,8 @@ def run_checks(skip_python_deps: bool, strict_python_deps: bool) -> dict[str, An
     )
     for path in shared_files:
         results.append(check(path.is_file(), f"shared resource: {path.name}", str(path)))
+    shared_contract = plugin_root / "references" / "execution_contract.md"
+    results.append(check(shared_contract.is_file(), "shared resource: execution_contract.md", str(shared_contract)))
 
     if not skip_python_deps:
         for module, requirement in PYTHON_DEPENDENCIES.items():

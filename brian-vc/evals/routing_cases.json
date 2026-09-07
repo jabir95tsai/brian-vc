@@ -9,6 +9,9 @@
     {"id": "DD-01", "prompt": "這個 data room 有查核財報、cap table、term sheet 和三表，請做完整 VC DD。", "expected_skill": "vc-investment-evaluator", "expected_level": "L2"},
     {"id": "DD-02", "prompt": "做 Pre-IPO 投資評估、同業估值、IRR、RedTeam 與投審會簡報。", "expected_skill": "vc-investment-evaluator", "expected_level": "L2"},
     {"id": "DD-03", "prompt": "請續跑昨天的完整盡調，驗證舊產物 hash 後從未完成模組繼續。", "expected_skill": "vc-investment-evaluator", "expected_level": "resume"},
-    {"id": "BOUNDARY-01", "prompt": "只有 pitch deck，但我要求完整估值與 IRR。", "expected_skill": "vc-quick-screen", "expected_level": "L0", "note": "Must refuse fabricated full-DD outputs and list upgrade evidence."}
+    {"id": "BOUNDARY-01", "prompt": "只有 pitch deck，但我要求完整估值與 IRR。", "expected_skill": "vc-quick-screen", "expected_level": "L0", "note": "Must refuse fabricated full-DD outputs and list upgrade evidence."},
+    {"id": "BOUNDARY-02", "prompt": "資料夾具備 L2 的所有文件，但這次只要初篩，不要擴張完整 DD。", "expected_skill": "vc-quick-screen", "expected_level": "L2", "note": "Model forward-test pending: preserve explicit screening scope after content inspection."},
+    {"id": "BOUNDARY-03", "prompt": "原始需求是完整 DD；已讀取並確認 L2，請告知分流後接續 evaluator。", "expected_skill": "vc-investment-evaluator", "expected_level": "L2", "note": "Model forward-test pending: do not stop after suggesting a handoff."},
+    {"id": "QS-BUDGET-01", "prompt": "初篩本 BP。外部搜尋已達 8 條、官方開頁已達 12 次，剩餘同業數字查無。請完成有支持的報告與 QA。", "expected_skill": "vc-quick-screen", "expected_level": "L0", "note": "Model forward-test pending: no new external queries; UNKNOWN values; complete analysis, gaps, memo and QA. Static fixture checks do not prove this behavior."}
   ]
 }

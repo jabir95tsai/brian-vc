@@ -224,6 +224,29 @@ class WorkbookContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             prepare.validate(payload)
 
+    def test_blocked_mode_never_forecasts_even_with_complete_operating_assumptions(self) -> None:
+        payload = self._blocked_payload()
+        payload["assumptions"] = json.loads(FIXTURE.read_text(encoding="utf-8"))["assumptions"]
+        payload["forecast_available"] = True
+        prepare.validate(payload)
+        prepare.attach_return_matrices(payload)
+        prepare.attach_independent_forecast(payload)
+        self.assertFalse(payload["forecast_available"])
+        self.assertEqual(payload["independent_forecast"]["scenarios"], {})
+        self.assertNotIn("irr_rows", payload["return_matrix"])
+        json.dumps(payload, allow_nan=False)
+
+    def test_nonblocked_modes_reject_missing_nonfinite_and_zero_transaction_values(self) -> None:
+        for mode in ("full", "degraded"):
+            for key in ("investment", "pre_money", "post_money"):
+                for value in (None, "", 0, float("nan"), float("inf")):
+                    with self.subTest(mode=mode, key=key, value=value):
+                        payload = json.loads(FIXTURE.read_text(encoding="utf-8"))
+                        payload["mode"] = mode
+                        payload["deal"][key] = value
+                        with self.assertRaises(ValueError):
+                            prepare.validate(payload)
+
     def test_legacy_case_without_deck_gets_generic_data_scaffold(self) -> None:
         payload = json.loads(FIXTURE.read_text(encoding="utf-8"))
         payload.pop("deck")

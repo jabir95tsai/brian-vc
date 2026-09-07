@@ -13,7 +13,14 @@ Create `{company}_financial_model_vN.xlsx` with these seven core sheets in this 
 6. `⑤投報率分析`
 7. `⑥CapEx與資金接力`
 
-Requirements:
+Mode boundaries follow `pipeline_contract.md`. The calculation requirements below
+apply to `full` and `degraded` (the latter needs explicit user-provided calculable
+transaction assumptions). In `blocked`, preserve the seven-sheet structure and
+facts, disclose missing terms, and emit no independent forecast or IRR/Multiple.
+The workbook audit must report `BLOCKED_AS_DESIGNED` and zero base-forecast
+formulas; D3 stays blocked even when this factual workbook is deliverable.
+
+Requirements (full/degraded):
 
 - Separate source inputs, editable assumptions, formulas, and outputs.
 - Include conservative, base, and upside scenarios.

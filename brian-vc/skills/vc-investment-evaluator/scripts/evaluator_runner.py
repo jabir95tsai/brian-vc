@@ -207,11 +207,36 @@ def all_gate_statuses(state: dict[str, Any]) -> dict[str, str]:
     return {gate: gate_status(state, gate) for gate in GATE_MODULES}
 
 
-def dependency_satisfied(state: dict[str, Any], token: str) -> bool:
+def transaction_block_documented(state: dict[str, Any], module_id: str) -> bool:
+    """Only a documented missing-terms refusal can feed factual downstream work.
+
+    This is an edge exception, never a successful valuation or D_GATE result.
+    Hash validity is checked by verify_state before freezing and delivery.
+    """
+    if state.get("mode") != "blocked" or module_id not in {"D2", "D3"}:
+        return False
+    module = state["modules"][module_id]
+    return (
+        module["status"] == "blocked"
+        and bool(module.get("reason", "").strip())
+        and "blocked_as_designed=missing_transaction_terms" in module.get("evidence", [])
+        and bool(module.get("artifacts"))
+        and not module.get("retry_exhausted")
+        and all(state["modules"][key]["status"] == "complete" for key in ("C4", "D1"))
+    )
+
+
+def dependency_satisfied(state: dict[str, Any], token: str, consumer: str | None = None) -> bool:
     if token == "ROOT":
         return True
     optional = token.endswith("?")
     base = token[:-1] if optional else token
+    if consumer in {"E1", "E3"} and transaction_block_documented(state, base):
+        return True
+    if consumer == "F1" and base == "D_GATE" and all(
+        transaction_block_documented(state, key) for key in ("D2", "D3")
+    ):
+        return True
     if base in GATE_MODULES:
         return gate_status(state, base) == "complete"
     status = state["modules"][base]["status"]
@@ -224,7 +249,7 @@ def unmet_dependencies(state: dict[str, Any], module_id: str) -> list[str]:
     return [
         token
         for token in state["modules"][module_id]["dependencies"]
-        if not dependency_satisfied(state, token)
+        if not dependency_satisfied(state, token, module_id)
     ]
 
 
@@ -323,6 +348,8 @@ def set_module_state(
     if status not in VALID_STATES:
         raise RunnerError(f"invalid state: {status}")
     module = state["modules"][module_id]
+    if state.get("mode") == "blocked" and module_id in {"D2", "D3"} and status == "complete":
+        raise RunnerError(f"{module_id} must remain blocked when transaction terms are missing")
     evidence_values = [item.strip() for item in evidence if item.strip()]
     artifact_values = [artifact_record(case_root, item) for item in artifacts]
 
@@ -347,7 +374,8 @@ def set_module_state(
         raise RunnerError(
             f"{module_id} already failed {MAX_FAILED_ATTEMPTS} times "
             f"({module.get('reason') or 'no reason recorded'}); retry limit reached. "
-            "Report the failure to the user, or reset the module to pending to rerun it."
+            "Continue independent modules. Only an explicit human rerun decision may "
+            "reset this module to pending; never reset automatically to bypass the limit."
         )
 
     if status == "pending":

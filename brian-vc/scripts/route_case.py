@@ -90,6 +90,11 @@ def classify(case_dir: Path, requested_skill: str | None = None, allow_degraded:
         reason = "已有部分資料，但未達完整 DD 的四項 L2 證據門檻。"
     if not files:
         mode = "quick-screen"
+    # Evidence maturity and user scope are separate. This remains a filename
+    # hint; the skill must read the actual contents before accepting the level.
+    if requested_skill == "vc-quick-screen":
+        primary, mode = "vc-quick-screen", "quick-screen"
+        reason += " 使用者明確只要初篩；保留資料級別，不擴張為完整 DD。"
     return {
         "case_dir": str(case_dir.resolve()),
         "status": status,
